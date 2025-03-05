@@ -1,0 +1,46 @@
+version: "3.9"
+services:
+  backend:
+    container_name: backend
+    build:
+      context: ./apps/back
+    env_file:
+      - .env
+    expose:
+      - 80
+    depends_on:   
+      - mongodb
+      - rabbitmq
+  rabbitmq:
+    image: rabbitmq
+    restart: always
+    ports:
+      - 5672:5672
+    environment:
+      RABBITMQ_DEFAULT_USER: "${RABBITMQ_USER}"
+      RABBITMQ_DEFAULT_PASS: "${RABBITMQ_PASSWORD}"
+      RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: "-rabbit log_levels [{connection,error},{default,error}] disk_free_limit 2147483648 max_message_size 268435456 load_definitions '/run/secrets/rabbit_config'"
+    secrets:
+      - rabbit_config
+  mongodb:
+    image: mongo
+    container_name: mongodb_container
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+      MONGO_INITDB_ROOT_DATABASE: ${MONGO_DATABASE}
+    ports:
+      - "${MONGO_PORT}:27017"
+    volumes:
+      - mongodb-data:/data/db
+      - mongodb-log:/var/log/mongodb
+
+volumes:
+  mongodb-data:
+    driver: local
+  mongodb-log:
+    driver: local
+
+secrets:
+  rabbit_config:
+    file: ./configs/rabbit/definitions.json

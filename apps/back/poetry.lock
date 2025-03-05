@@ -35,24 +35,6 @@ test = ["anyio[trio]", "coverage[toml] (>=7)", "exceptiongroup (>=1.2.0)", "hypo
 trio = ["trio (>=0.26.1)"]
 
 [[package]]
-name = "back"
-version = "0.1.0"
-description = ""
-optional = false
-python-versions = ">=3.11,<=3.14"
-groups = ["main"]
-files = []
-develop = false
-
-[package.dependencies]
-fastapi = {version = "^0.115.11", extras = ["standard"]}
-pymongo = "^4.11.2"
-
-[package.source]
-type = "directory"
-url = "apps/back"
-
-[[package]]
 name = "certifi"
 version = "2025.1.31"
 description = "Python package for providing Mozilla's CA Bundle."
@@ -1104,4 +1086,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.11,<=3.14"
-content-hash = "a32622152010b3f7f13a1c4779092a2bfc33ebcaf9ce8697be6e1f64121f54c6"
+content-hash = "a3dcbd7f871f53a07c7ba516dfc918607e6b896ccfa477d48931123124688554"
