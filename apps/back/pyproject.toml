@@ -1,0 +1,20 @@
+[project]
+name = "back"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Sergey Dorokhov",email = "seregapax@gmail.com"}
+]
+requires-python = ">=3.11,<=3.14"
+
+[tool.poetry.scripts]
+start = 'back.main:start'
+
+[poetry-monoranger-plugin]
+enabled = true
+monorepo-root = "../../"
+version-pinning-rule = '^'
+
+[tool.poetry.dependencies]
+fastapi = {extras = ["standard"], version = "^0.115.11"}
+pymongo = "^4.11.2"
