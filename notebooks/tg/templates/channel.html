@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Последние сообщения</title>
+</head>
+<body>
+<h1>Последние 10 сообщений из группы/канала @{{ group_username }}</h1>
+{{ messages_html | safe }}
+</body>
+</html>
