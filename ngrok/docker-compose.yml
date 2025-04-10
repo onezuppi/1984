@@ -10,10 +10,7 @@ services:
     volumes:
       - ./ssl:/etc/letsencrypt/live
       - ./ssl:/certs
-    command: >
-      sh -c "certbot certonly --standalone --non-interactive --agree-tos --email ${EMAIL} --domains ${DOMAIN} &&
-      cp /etc/letsencrypt/live/${DOMAIN}/fullchain.pem /certs/server.crt &&
-      cp /etc/letsencrypt/live/${DOMAIN}/privkey.pem /certs/server.key"
+    entrypoint: [ "sh", "-c", "certbot certonly --standalone --non-interactive --agree-tos --email seregapax@gmail.com -d milki.space && cp /etc/letsencrypt/live/milki.space/fullchain.pem /certs/server.crt && cp /etc/letsencrypt/live/milki.space/privkey.pem /certs/server.key" ]
 
   localtunnel-server:
     image: boro/localtunnel-server:latest
@@ -25,10 +22,8 @@ services:
   nginx:
     image: nginx:alpine
     container_name: localtunnel-nginx
-    restart: always
     depends_on:
       - certbot
-      - localtunnel-server
     ports:
       - "80:80"
       - "443:443"
@@ -36,3 +31,11 @@ services:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
       - ./site.conf:/etc/nginx/conf.d/site.conf:ro
       - ./ssl:/certs:ro
+    entrypoint: >
+      sh -c "while [ ! -f /certs/server.crt ]; do
+                echo 'Waiting for certificate...';
+                sleep 2;
+              done;
+              echo 'Certificate found, starting nginx';
+              exec nginx -g 'daemon off;'"
+  
