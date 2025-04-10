@@ -1,0 +1,50 @@
+version: '2'
+
+services:
+  nginx-proxy:
+    image: nginxproxy/nginx-proxy
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - certs:/etc/nginx/certs:ro
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    networks:
+      - proxy-tier
+
+  acme-companion:
+    image: nginxproxy/acme-companion
+    container_name: nginx-proxy-acme
+    volumes_from:
+      - nginx-proxy
+    volumes:
+      - acme:/etc/acme.sh
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      DEFAULT_EMAIL: ${EMAIL}
+    networks:
+      - proxy-tier
+
+  localtunnel-server:
+    image: defunctzombie/localtunnel-server
+    container_name: localtunnel-server
+    environment:
+      - DOMAIN=${DOMAIN}
+    networks:
+      - proxy-tier
+    labels:
+      - "VIRTUAL_HOST=${DOMAIN}"
+      - "LETSENCRYPT_HOST=${DOMAIN}"
+      - "LETSENCRYPT_EMAIL=${EMAIL}"
+
+volumes:
+  certs:
+  vhost:
+  html:
+  acme:
+
+networks:
+  proxy-tier:
