@@ -16,7 +16,7 @@ services:
       cp /etc/letsencrypt/live/${DOMAIN}/privkey.pem /certs/server.key"
 
   localtunnel-server:
-    image: localtunnel/server:latest
+    image: boro/localtunnel-server:latest
     container_name: localtunnel-server
     restart: always
     ports:
