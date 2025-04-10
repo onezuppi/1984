@@ -17,7 +17,7 @@ services:
   localtunnel-server:
     image: boro/localtunnel-server:latest
     container_name: localtunnel-server
-    command: --port 3000
+    command: --secure true --domain $DOMAIN --port 3000
     restart: always
     network_mode: host
 
