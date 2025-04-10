@@ -20,8 +20,6 @@ services:
     restart: always
     ports:
       - "3000:3000"
-    networks:
-      - mynet
 
   nginx:
     image: nginx:alpine
@@ -41,9 +39,3 @@ services:
               done;
               echo 'Certificate found, starting nginx';
               exec nginx -g 'daemon off;'"
-    networks:
-      - mynet
-  
-networks:
-  mynet:
-    driver: bridge
