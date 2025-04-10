@@ -1,18 +1,18 @@
 version: '3.8'
 
 services:
-  certbot:
-    image: certbot/certbot
-    container_name: certbot
-    ports:
-      - "80:80"
-    environment:
-      - DOMAIN=${DOMAIN}
-      - EMAIL=${EMAIL}
-    volumes:
-      - ./ssl:/etc/letsencrypt/live
-      - ./ssl:/certs
-    entrypoint: [ "sh", "-c", "certbot certonly --standalone --non-interactive --agree-tos --email seregapax@gmail.com -d milki.space && cp /etc/letsencrypt/live/milki.space/fullchain.pem /certs/server.crt && cp /etc/letsencrypt/live/milki.space/privkey.pem /certs/server.key" ]
+#  certbot:
+#    image: certbot/certbot
+#    container_name: certbot
+#    ports:
+#      - "80:80"
+#    environment:
+#      - DOMAIN=${DOMAIN}
+#      - EMAIL=${EMAIL}
+#    volumes:
+#      - ./ssl:/etc/letsencrypt/live
+#      - ./ssl:/certs
+#    entrypoint: [ "sh", "-c", "certbot certonly --standalone --non-interactive --agree-tos --email seregapax@gmail.com -d milki.space && cp /etc/letsencrypt/live/milki.space/fullchain.pem /certs/server.crt && cp /etc/letsencrypt/live/milki.space/privkey.pem /certs/server.key" ]
 
   localtunnel-server:
     image: boro/localtunnel-server:latest
