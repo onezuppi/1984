@@ -1,50 +1,40 @@
-version: '2'
+version: '3.8'
 
 services:
-  nginx-proxy:
-    image: nginxproxy/nginx-proxy
-    container_name: nginx-proxy
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    environment:
+      - DOMAIN=${DOMAIN}
+      - EMAIL=${EMAIL}
+    volumes:
+      - ./ssl:/etc/letsencrypt/live
+    entrypoint: >
+      sh -c "
+      certbot certonly --standalone --non-interactive --agree-tos
+        --email $EMAIL -d $DOMAIN &&
+      cp /etc/letsencrypt/live/$DOMAIN/fullchain.pem /etc/letsencrypt/live/server.crt &&
+      cp /etc/letsencrypt/live/$DOMAIN/privkey.pem /etc/letsencrypt/live/server.key
+      "
+
+  localtunnel-server:
+    image: localtunnel/server:latest
+    container_name: localtunnel-server
+    restart: always
+    ports:
+      - "3000:3000"
+
+  nginx:
+    image: nginx:alpine
+    container_name: localtunnel-nginx
+    restart: always
+    depends_on:
+      - certbot
+      - localtunnel-server
     ports:
       - "80:80"
       - "443:443"
     volumes:
-      - certs:/etc/nginx/certs:ro
-      - vhost:/etc/nginx/vhost.d
-      - html:/usr/share/nginx/html
-      - /var/run/docker.sock:/tmp/docker.sock:ro
-    networks:
-      - proxy-tier
-
-  acme-companion:
-    image: nginxproxy/acme-companion
-    container_name: nginx-proxy-acme
-    volumes_from:
-      - nginx-proxy
-    volumes:
-      - acme:/etc/acme.sh
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-    environment:
-      DEFAULT_EMAIL: ${EMAIL}
-    networks:
-      - proxy-tier
-
-  localtunnel-server:
-    image: defunctzombie/localtunnel-server
-    container_name: localtunnel-server
-    environment:
-      - DOMAIN=${DOMAIN}
-    networks:
-      - proxy-tier
-    labels:
-      - "VIRTUAL_HOST=${DOMAIN}"
-      - "LETSENCRYPT_HOST=${DOMAIN}"
-      - "LETSENCRYPT_EMAIL=${EMAIL}"
-
-volumes:
-  certs:
-  vhost:
-  html:
-  acme:
-
-networks:
-  proxy-tier:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./site.conf:/etc/nginx/conf.d/site.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
