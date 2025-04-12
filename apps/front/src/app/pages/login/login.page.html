@@ -2,27 +2,24 @@
     <div tuiSurface class="login-card">
         <h1 class="main-title">Вход в приложение</h1>
         <p class="subtitle">Выберите способ авторизации:</p>
-
+        
         <div class="buttons">
             <button
                 tuiButton
                 appearance="primary"
                 size="l"
                 class="auth-button"
-                (click)="loginWithVK()"
             >
-                <tui-icon icon="vk" class="icon"></tui-icon>
                 Войти через ВКонтакте
             </button>
-
+            
             <button
                 tuiButton
                 appearance="outline"
                 size="l"
                 class="auth-button"
-                (click)="loginWithTelegram()"
+                appTelegramAuth
             >
-                <tui-icon icon="telegram" class="icon"></tui-icon>
                 Войти через Telegram
             </button>
         </div>

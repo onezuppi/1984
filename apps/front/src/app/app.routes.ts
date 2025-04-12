@@ -6,8 +6,15 @@ export const routes = [
     },
     {
         path: 'auth',
-        loadChildren: () => import('./children/auth/auth-routing.module')
-            .then(m => m.AuthRoutingModule),
+        loadComponent: () => import('./pages/login/login.page').then(c => c.LoginPage),
+    },
+    {
+        path: 'auth-callback',
+        loadComponent: () => import('./pages/auth-callback/auth-callback.page').then(c => c.AuthCallbackComponent),
+    },
+    {
+        path: 'cabinet',
+        loadComponent: () => import('./pages/cabinet/cabinet.page').then(c => c.CabinetPage),
     },
     {
         path: '**',
