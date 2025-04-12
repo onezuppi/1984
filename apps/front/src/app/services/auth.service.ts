@@ -40,6 +40,6 @@ export class AuthService {
     /** Выход из аккаунта */
     logout(): void {
         localStorage.removeItem(this.tokenKey);
-        this.router.navigate(['/login']);
+        this.router.navigate(['/auth']);
     }
 }
