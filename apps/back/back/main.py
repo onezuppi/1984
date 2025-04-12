@@ -3,7 +3,9 @@ from typing import Union
 import uvicorn
 from fastapi import FastAPI
 
-app = FastAPI()
+app = FastAPI(
+    root_path="/api"
+)
 
 
 @app.get("/")
