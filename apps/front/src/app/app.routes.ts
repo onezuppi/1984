@@ -1,3 +1,5 @@
+import { AuthGuard } from './guards/auth.guard';
+
 export const routes = [
     {
         path: '',
@@ -9,12 +11,9 @@ export const routes = [
         loadComponent: () => import('./pages/login/login.page').then(c => c.LoginPage),
     },
     {
-        path: 'auth-callback',
-        loadComponent: () => import('./pages/auth-callback/auth-callback.page').then(c => c.AuthCallbackComponent),
-    },
-    {
-        path: 'cabinet',
-        loadComponent: () => import('./pages/cabinet/cabinet.page').then(c => c.CabinetPage),
+        path: 'profile',
+        loadComponent: () => import('./pages/profile/profile.page').then(c => c.ProfilePage),
+        canActivate: [AuthGuard]
     },
     {
         path: '**',

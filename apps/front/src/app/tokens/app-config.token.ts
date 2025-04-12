@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core';
 
-export const NGROK_URL = new InjectionToken<string>('NgrokUrl');
+export const TELEGRAM_BOT_NAME = new InjectionToken<string>('TELEGRAM_BOT_NAME');
 
-export const API_URL = new InjectionToken<string>('ApiUrl');
+export const BACKEND_API_URL = new InjectionToken<string>('BACKEND_API_URL');

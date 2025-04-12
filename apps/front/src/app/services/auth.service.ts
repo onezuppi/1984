@@ -1,34 +1,45 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { TelegramUser } from '../interfaces/telegram-user.interface';
+import { inject, Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { Observable, tap } from 'rxjs';
+import { BACKEND_API_URL } from '../tokens/app-config.token';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-    private _userSubject = new BehaviorSubject<TelegramUser | null>(null);
-    user$: Observable<TelegramUser | null> = this._userSubject.asObservable();
+    private readonly tokenKey: string = 'auth_token';
+    private readonly http: HttpClient = inject(HttpClient);
+    private readonly router: Router = inject(Router);
+    private readonly apiUrl: string = inject(BACKEND_API_URL);
 
-    constructor() {
-        const stored = sessionStorage.getItem('telegram_user');
-        if (stored) {
-            this._userSubject.next(JSON.parse(stored));
+    /** Принимает данные от Telegram, отправляет их на бэкенд и возвращает Observable с JWT */
+    loginWithTelegram(userData: any): Observable<{ token: string }> {
+        return this.http.post<{ token: string }>(`${ this.apiUrl }/auth/telegram`, userData)
+            .pipe(
+                tap(response => {
+                    localStorage.setItem(this.tokenKey, response.token);
+                })
+            );
+    }
+
+    /** Возвращает данные профиля, используя сохранённый JWT */
+    getMe(): Observable<{ name: string; avatar: string | null }> {
+        const token = localStorage.getItem(this.tokenKey);
+        if (!token) {
+            this.router.navigate(['/login']);
+            throw new Error('Нет токена');
         }
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${ token }`);
+        return this.http.get<{ name: string; avatar: string | null }>(`${ this.apiUrl }/me`, { headers });
     }
 
-    setUser(user: TelegramUser): void {
-        this._userSubject.next(user);
-        sessionStorage.setItem('telegram_user', JSON.stringify(user));
+    /** Проверка авторизации */
+    isAuthenticated(): boolean {
+        return !!localStorage.getItem(this.tokenKey);
     }
 
-    clearUser(): void {
-        this._userSubject.next(null);
-        sessionStorage.removeItem('telegram_user');
-    }
-
-    getTelegramId(): string | null {
-        const user = sessionStorage.getItem('telegram_user');
-        if (user) {
-            return JSON.parse(user).id;
-        }
-        return null;
+    /** Выход из аккаунта */
+    logout(): void {
+        localStorage.removeItem(this.tokenKey);
+        this.router.navigate(['/login']);
     }
 }
