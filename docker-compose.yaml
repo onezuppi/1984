@@ -27,8 +27,8 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./nginx/conf.d:/etc/nginx/conf.d:ro
-      - ./nginx/ssl:/certs
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/ssl:/certs:ro
       - ./nginx/start.sh:/start.sh
     entrypoint: ["/bin/sh", "/start.sh"]
     depends_on:
