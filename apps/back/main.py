@@ -12,7 +12,7 @@ app = FastAPI(
 )
 
 
-app.include_router(tg_auth_router, prefix="/auth", tags=["TG Auth"])
+app.include_router(tg_auth_router, prefix="", tags=["TG Auth"])
 
 
 def start() -> None:
