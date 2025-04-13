@@ -40,7 +40,7 @@ export class ProfilePage implements OnInit {
     private readonly apiUrl: string = inject(BACKEND_API_URL);
 
     ngOnInit(): void {
-        this.profile$ = this.auth.getMe();
+        this.profile$ = this.auth.getUserData();
     }
 
     logout(): void {

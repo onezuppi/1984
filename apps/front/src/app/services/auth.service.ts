@@ -22,7 +22,7 @@ export class AuthService {
     }
 
     /** Возвращает данные профиля, используя сохранённый JWT */
-    getMe(): Observable<{ name: string; avatar: string | null }> {
+    getUserData(): Observable<{ name: string; avatar: string | null }> {
         const token = localStorage.getItem(this.tokenKey);
         if (!token) {
             this.router.navigate(['/login']);

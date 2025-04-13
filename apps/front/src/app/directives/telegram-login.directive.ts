@@ -1,43 +1,62 @@
-// src/app/telegram-login.directive.ts
-import { AfterViewInit, Directive, ElementRef, inject, NgZone } from '@angular/core';
-import { TELEGRAM_BOT_NAME } from '../tokens/app-config.token';
+import { DestroyRef, Directive, HostListener, inject, NgZone, OnInit, } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { TELEGRAM_BOT_ID } from '../tokens/app-config.token';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Directive({
     selector: '[telegramLogin]',
-    standalone: true
+    standalone: true,
 })
-export class TelegramLoginDirective implements AfterViewInit {
-    private readonly el: ElementRef = inject(ElementRef);
+export class TelegramLoginDirective implements OnInit {
     private readonly ngZone: NgZone = inject(NgZone);
     private readonly auth: AuthService = inject(AuthService);
     private readonly router: Router = inject(Router);
-    private readonly botName: string = inject(TELEGRAM_BOT_NAME);
+    private readonly botId: number = inject(TELEGRAM_BOT_ID);
+    private readonly destroy: DestroyRef = inject(DestroyRef);
 
-    ngAfterViewInit(): void {
-        (window as any)['loginViaTelegram'] = (userData: any) => {
-            // Запуск в зоне Angular
-            this.ngZone.run(() => {
-                console.log('Telegram auth data:', userData);
-                this.auth.loginWithTelegram(userData).subscribe({
-                    next: () => {
-                        this.router.navigate(['/profile']);
-                    },
-                    error: (err) => {
-                        console.error('Ошибка авторизации через Telegram', err);
+    ngOnInit(): void {
+        this.loadTelegramScript();
+    }
+
+    @HostListener('click')
+    onClick(): void {
+        if ((window as any)['Telegram']?.Login?.auth) {
+            this.ngZone.runOutsideAngular(() => {
+                (window as any)['Telegram'].Login.auth(
+                    { bot_id: this.botId, request_access: true },
+                    (userData: any) => {
+                        if (!userData) {
+                            console.warn('Telegram authentication failed.');
+                            return;
+                        }
+                        this.ngZone.run(() => {
+                            this.auth
+                                .loginWithTelegram(userData)
+                                .pipe(
+                                    takeUntilDestroyed(this.destroy)
+                                )
+                                .subscribe({
+                                    next: () => this.router.navigate(['/profile']),
+                                    error: (err) => console.error('Telegram login error:', err),
+                                });
+                        });
                     }
-                });
+                );
             });
-        };
+        } else {
+            console.error('Telegram Login is not available.');
+        }
+    }
 
+    private loadTelegramScript(): void {
+        if (document.getElementById('telegram-login-script')) {
+            return;
+        }
         const script = document.createElement('script');
-        script.src = 'https://telegram.org/js/telegram-widget.js?19';
-        script.setAttribute('data-telegram-login', this.botName);
-        script.setAttribute('data-size', 'large');
-        script.setAttribute('data-request-access', 'write');
-        script.setAttribute('data-onauth', 'loginViaTelegram(user)');
-        script.setAttribute('async', 'true');
-        this.el.nativeElement.appendChild(script);
+        script.id = 'telegram-login-script';
+        script.src = 'https://telegram.org/js/telegram-widget.js?7';
+        script.async = true;
+        document.head.appendChild(script);
     }
 }
