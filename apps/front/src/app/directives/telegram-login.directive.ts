@@ -1,4 +1,4 @@
-import { DestroyRef, Directive, HostListener, inject, NgZone, OnInit, } from '@angular/core';
+import { DestroyRef, Directive, HostListener, inject, OnInit, } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { TELEGRAM_BOT_ID } from '../tokens/telegram-bot-id.token';
@@ -9,7 +9,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     standalone: true,
 })
 export class TelegramLoginDirective implements OnInit {
-    private readonly ngZone: NgZone = inject(NgZone);
     private readonly auth: AuthService = inject(AuthService);
     private readonly router: Router = inject(Router);
     private readonly botId: number = inject(TELEGRAM_BOT_ID);
@@ -22,28 +21,24 @@ export class TelegramLoginDirective implements OnInit {
     @HostListener('click')
     onClick(): void {
         if ((window as any)['Telegram']?.Login?.auth) {
-            this.ngZone.runOutsideAngular(() => {
-                (window as any)['Telegram'].Login.auth(
-                    { bot_id: this.botId, request_access: true },
-                    (userData: any) => {
-                        if (!userData) {
-                            console.warn('Telegram authentication failed.');
-                            return;
-                        }
-                        this.ngZone.run(() => {
-                            this.auth
-                                .loginWithTelegram(userData)
-                                .pipe(
-                                    takeUntilDestroyed(this.destroy)
-                                )
-                                .subscribe({
-                                    next: () => this.router.navigate(['/profile']),
-                                    error: (err) => console.error('Telegram login error:', err),
-                                });
-                        });
+            (window as any)['Telegram'].Login.auth(
+                { bot_id: this.botId, request_access: true },
+                (userData: any) => {
+                    if (!userData) {
+                        console.warn('Telegram authentication failed.');
+                        return;
                     }
-                );
-            });
+                    this.auth
+                        .loginWithTelegram(userData)
+                        .pipe(
+                            takeUntilDestroyed(this.destroy)
+                        )
+                        .subscribe({
+                            next: () => this.router.navigate(['/profile']),
+                            error: (err) => console.error('Telegram login error:', err),
+                        });
+                }
+            );
         } else {
             console.error('Telegram Login is not available.');
         }
