@@ -3,6 +3,8 @@ import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { TELEGRAM_BOT_ID } from '../tokens/telegram-bot-id.token';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Observable, switchMap } from 'rxjs';
+import { TelegramUser } from '../interfaces/telegram-user.interface';
 
 @Directive({
     selector: '[telegramLogin]',
@@ -20,28 +22,31 @@ export class TelegramLoginDirective implements OnInit {
 
     @HostListener('click')
     onClick(): void {
-        if ((window as any)['Telegram']?.Login?.auth) {
+        this.telegramLogin()
+            .pipe(
+                switchMap(userData => this.auth.loginWithTelegram(userData)),
+                takeUntilDestroyed(this.destroy)
+            )
+            .subscribe({
+                next: () => this.router.navigate(['/profile']),
+                error: err => console.error('Telegram login error:', err),
+            });
+    }
+
+    private telegramLogin(): Observable<TelegramUser> {
+        return new Observable(observer => {
             (window as any)['Telegram'].Login.auth(
                 { bot_id: this.botId, request_access: true },
-                (userData: any) => {
+                (userData: TelegramUser) => {
                     if (!userData) {
-                        console.warn('Telegram authentication failed.');
-                        return;
+                        observer.error('Telegram authentication failed.');
+                    } else {
+                        observer.next(userData);
+                        observer.complete();
                     }
-                    this.auth
-                        .loginWithTelegram(userData)
-                        .pipe(
-                            takeUntilDestroyed(this.destroy)
-                        )
-                        .subscribe({
-                            next: () => this.router.navigate(['/profile']),
-                            error: (err) => console.error('Telegram login error:', err),
-                        });
                 }
             );
-        } else {
-            console.error('Telegram Login is not available.');
-        }
+        });
     }
 
     private loadTelegramScript(): void {

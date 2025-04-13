@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
+import { TelegramUser } from '../interfaces/telegram-user.interface';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -10,7 +11,7 @@ export class AuthService {
     private readonly router: Router = inject(Router);
 
     /** Принимает данные от Telegram, отправляет их на бэкенд и возвращает Observable с JWT */
-    loginWithTelegram(userData: any): Observable<{ token: string }> {
+    loginWithTelegram(userData: TelegramUser): Observable<{ token: string }> {
         return this.http.post<{ token: string }>(`/api/auth/telegram`, userData)
             .pipe(
                 tap(response => {
