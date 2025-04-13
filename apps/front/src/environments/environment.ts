@@ -1,5 +1,4 @@
 export const environment = {
-    production: false,
+    production: true,
     telegramBotId: 7733248928,
-    backendUrl: 'http://localhost:8000'
 };
