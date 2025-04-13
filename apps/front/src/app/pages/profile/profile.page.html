@@ -1,0 +1,13 @@
+<div class="profile-page" *ngIf="profile$ | async as profile; else loading">
+    <tui-avatar *ngIf="profile.avatar; else noAvatar" [src]="profile.avatar" size="l"></tui-avatar>
+    <ng-template #noAvatar>
+        <tui-avatar>{{ profile.name }}</tui-avatar>
+    </ng-template>
+    <h3>{{ profile.name }}</h3>
+    <button tuiButton appearance="primary" size="m" (click)="logout()">
+        Выйти
+    </button>
+</div>
+<ng-template #loading>
+    Загрузка профиля...
+</ng-template>
