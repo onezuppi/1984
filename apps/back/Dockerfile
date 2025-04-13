@@ -4,8 +4,9 @@ RUN pip install poetry
 
 WORKDIR /app
 
-COPY pyproject.toml poetry.lock /app/
+COPY pyproject.toml poetry.lock main.py /app/
 COPY back/ /app/back
+
 RUN poetry install
 
 ENTRYPOINT ["poetry", "run", "start"]
