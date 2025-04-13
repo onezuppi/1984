@@ -23,7 +23,7 @@ def verify_telegram_auth(data: TelegramAuth) -> bool:
     data_check_arr = [f"{key}={value}" for key, value in sorted(data_dict.items())]
     data_check_string = "\n".join(data_check_arr)
     # Вычисляем свой хеш
-    secret_key = hashlib.sha256(settings.BOT_TOKEN.encode()).digest()
+    secret_key = hashlib.sha256(settings.TG_BOT_TOKEN.encode()).digest()
     computed_hash = hmac.new(secret_key, data_check_string.encode(), hashlib.sha256).hexdigest()
     # Сравниваем с присланным хешем
     if computed_hash != hash_to_check:
