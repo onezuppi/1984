@@ -13,11 +13,8 @@ echo "[entrypoint] Checking for SSL certificates..."
 if [ -f "$CERT" ] && [ -f "$KEY" ]; then
   echo "[entrypoint] ✅ SSL certificates found — enabling HTTPS"
 
-  # Копируем HTTPS конфиг, если не существует
-  if [ ! -f "$HTTPS_CONF" ]; then
-    cp "$HTTPS_TEMPLATE" "$HTTPS_CONF"
-    echo "[entrypoint] 🔐 https.conf создан"
-  fi
+  cp "$HTTPS_TEMPLATE" "$HTTPS_CONF"
+  echo "[entrypoint] 🔐 https.conf создан"
 
   # Отключаем http.conf, если он активен
   if [ -f "$HTTP_CONF" ]; then
