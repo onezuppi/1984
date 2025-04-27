@@ -1,0 +1,52 @@
+<!-- файл: add-bot-instruction.component.html -->
+<div class="page-container">
+    <h1 class="page-title">Мои каналы и чаты</h1>
+
+    <tui-notification
+        class="empty-message"
+    >
+        У вас еще нет ни одного подтвержденного канала или чата.
+    </tui-notification>
+
+    <div class="instruction-block">
+        <h2 class="instruction-title">Как подтвердить канал/чат?</h2>
+        <tui-accordion>
+            <tui-accordion-item>
+                <b>1. Запустите бота</b>
+                <ng-template tuiAccordionItemContent>
+                    Откройте нашего Telegram-бота по ссылке
+                    <a
+                        tuiLink
+                        href="https://t.me/tg_analytics_bot"
+                        target="_blank"
+                    >
+                        tg_analytics_bot
+                    </a>
+                    и нажмите кнопку "Start".
+                </ng-template>
+            </tui-accordion-item>
+
+            <tui-accordion-item>
+                <b>2. Добавьте бота в канал</b>
+                <ng-template tuiAccordionItemContent>
+                    Добавьте нашего бота в список администраторов вашего канала.<br />
+                    <a
+                        tuiLink
+                        href="https://core.telegram.org/bots#6-botfather-add-bot-to-channel"
+                        target="_blank"
+                    >
+                        Как это сделать?
+                    </a>
+                </ng-template>
+            </tui-accordion-item>
+
+            <tui-accordion-item>
+                <b>3. Вернитесь обратно</b>
+                <ng-template tuiAccordionItemContent>
+                    Вернитесь на эту страницу и обновите ее.<br />
+                    После этого вы должны увидеть свой канал в списке подтвержденных каналов.
+                </ng-template>
+            </tui-accordion-item>
+        </tui-accordion>
+    </div>
+</div>

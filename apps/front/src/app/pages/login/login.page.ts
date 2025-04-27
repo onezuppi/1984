@@ -10,7 +10,6 @@ import { VkLoginBtnComponent } from '../../components/vk-login-btn/vk-login-btn.
     imports: [
         TuiButton,
         TuiSurface,
-        VkLoginBtnComponent,
         TelegramLoginDirective,
     ]
 })
