@@ -170,5 +170,5 @@ cython_debug/
 .pypirc
 
 
-.idea/*
-.vscode/*
+.idea
+.vscode
