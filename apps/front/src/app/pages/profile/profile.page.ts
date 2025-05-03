@@ -4,8 +4,6 @@ import { TuiButton } from '@taiga-ui/core';
 import { CommonModule } from '@angular/common';
 import { TuiAvatar } from '@taiga-ui/kit';
 import { AuthService } from '../../services/auth.service';
-import { AddBotInstructionComponent } from '../../components/add-bot-instruction/add-bot-instruction.component';
-
 
 @Component({
     selector: 'app-profile-page',
@@ -14,7 +12,6 @@ import { AddBotInstructionComponent } from '../../components/add-bot-instruction
         TuiButton,
         CommonModule,
         TuiAvatar,
-        AddBotInstructionComponent
     ],
     templateUrl: './profile.page.html',
     styleUrls: ['./profile.page.scss']

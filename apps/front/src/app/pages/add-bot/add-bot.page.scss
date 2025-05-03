@@ -1,0 +1,14 @@
+.content {
+    margin: 16px;
+}
+
+.note-card {
+    margin-top: 12px;
+    background: #fff8e1;
+}
+
+mat-toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}

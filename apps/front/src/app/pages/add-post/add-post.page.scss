@@ -1,0 +1,26 @@
+.container {
+    max-width: 800px;
+    margin: 24px auto;
+    display: flex;
+    flex-direction: column; /* можно flex-layout дополнить */
+}
+
+.search-form {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.spinner {
+    margin-left: 8px;
+}
+
+.posts-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px; /* сетка карточек */
+}
+
+.post-card {
+    background: #fafafa; /* светлый фон */
+}

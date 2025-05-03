@@ -1,22 +1,22 @@
 import { AuthGuard } from './guards/auth.guard';
+import { AuthNavigationComponent } from './navigations/auth-navigation/auth-navigation.component';
+import { NAV_ROUTES } from './nav.config';
+import { Routes } from '@angular/router';
 
-export const routes = [
-    {
-        path: '',
-        redirectTo: 'auth',
-        pathMatch: 'full' as const
-    },
+export const routes: Routes = [
+    { path: '', redirectTo: 'auth', pathMatch: 'full' },
     {
         path: 'auth',
-        loadComponent: () => import('./pages/login/login.page').then(c => c.LoginPage),
+        loadComponent: () => import('./pages/login/login.page').then(m => m.LoginPage)
     },
     {
-        path: 'profile',
-        loadComponent: () => import('./pages/profile/profile.page').then(c => c.ProfilePage),
-        canActivate: [AuthGuard]
+        path: '',
+        component: AuthNavigationComponent,
+        canActivateChild: [AuthGuard],
+        children: NAV_ROUTES.map(r => ({
+            path: r.path,
+            loadComponent: r.loadComponent
+        }))
     },
-    {
-        path: '**',
-        redirectTo: '',
-    },
+    { path: '**', redirectTo: '' }
 ];

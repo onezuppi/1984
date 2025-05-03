@@ -1,0 +1,66 @@
+<mat-toolbar color="primary">
+    Инструкция: Добавление бота в канал
+</mat-toolbar>
+
+<div class="content">
+    <mat-accordion>
+        <!-- Шаг 0: Предварительные требования -->
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>Предварительные требования</mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-list>
+                <mat-list-item>Зарегистрированный бот в BotFather и токен API</mat-list-item>
+                <mat-list-item>Права владельца канала</mat-list-item>
+                <mat-list-item>Установленное приложение Telegram</mat-list-item>
+            </mat-list>
+            <mat-card class="note-card">
+                <mat-card-content>
+                    Совет: убедитесь, что бот хотя бы один раз запущен в чате с BotFather.
+                </mat-card-content>
+            </mat-card>
+        </mat-expansion-panel>
+        
+        <!-- Шаг 1: Открытие информации о канале -->
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>Шаг 1: Открыть информацию о канале</mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>В Telegram нажмите на название канала в шапке чата или значок «ℹ️» для десктопа.</p>
+        </mat-expansion-panel>
+        
+        <!-- Шаг 2: Переход в раздел Администраторы -->
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>Шаг 2: Перейти в «Администраторы»</mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>Выберите пункт «Администраторы», затем «Добавить администратора».</p>
+        </mat-expansion-panel>
+        
+        <!-- Шаг 3: Добавление бота -->
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>Шаг 3: Найти и добавить бота</mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>В поле поиска введите {{ botUsername }}, выберите бота и подтвердите добавление.</p>
+            <mat-card class="note-card">
+                <mat-card-content>
+                    Если бот не находится — проверьте правильность юзернейма и запуск через BotFather.
+                </mat-card-content>
+            </mat-card>
+        </mat-expansion-panel>
+        
+        <!-- Шаг 4: Настройка прав -->
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>Шаг 4: Настройка прав бота</mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-list>
+                <mat-list-item>Публиковать и удалять сообщения</mat-list-item>
+                <mat-list-item>Управлять комментариями</mat-list-item>
+                <mat-list-item>Изменять информацию о канале</mat-list-item>
+            </mat-list>
+            <p>Нажмите «Сохранить» после выбора необходимых прав.</p>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>
