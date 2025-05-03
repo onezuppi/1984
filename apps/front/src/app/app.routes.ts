@@ -12,10 +12,11 @@ export const routes: Routes = [
     {
         path: '',
         component: AuthNavigationComponent,
-        canActivateChild: [AuthGuard],
+        //canActivateChild: [AuthGuard],
         children: NAV_ROUTES.map(r => ({
             path: r.path,
-            loadComponent: r.loadComponent
+            loadComponent: r.loadComponent,
+            canActivate: r.canActivate
         }))
     },
     { path: '**', redirectTo: '' }
