@@ -1,19 +1,10 @@
-<div class="login-wrapper">
-    <div tuiSurface class="login-card">
-        <h1 class="main-title">Вход в приложение</h1>
-        <p class="subtitle">Выберите способ авторизации:</p>
-
-        <div class="buttons">
-            <button
-                tuiButton
-                appearance="primary"
-                size="l"
-                class="auth-button"
-                telegramLogin
-            >
-                Войти через Telegram
-            </button>
+<mat-card class="login">
+    <mat-card-title>
+        Вход в приложение
+    </mat-card-title>
+    <mat-card-actions>
+        <div class="button-flex-container">
+            <button mat-raised-button color="primary" telegramLogin> Войти через Telegram</button>
         </div>
-
-    </div>
-</div>
+    </mat-card-actions>
+</mat-card>

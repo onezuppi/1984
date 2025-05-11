@@ -1,15 +1,19 @@
 import { Component } from '@angular/core';
-import { TuiButton, TuiSurface } from '@taiga-ui/core';
 import { TelegramLoginDirective } from '../../directives/telegram-login.directive';
+import { MatButton } from '@angular/material/button';
+import { MatCard, MatCardActions, MatCardTitle } from '@angular/material/card';
 
 @Component({
     templateUrl: './login.page.html',
     styleUrls: ['./login.page.scss'],
     standalone: true,
     imports: [
-        TuiButton,
-        TuiSurface,
         TelegramLoginDirective,
+        MatButton,
+        MatCard,
+        MatCardTitle,
+        MatCardActions,
+        MatButton,
     ]
 })
 export class LoginPage {
