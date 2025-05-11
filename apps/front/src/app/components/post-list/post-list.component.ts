@@ -1,10 +1,11 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Post } from '../../models/post.model';
 import { PostComponent } from '../post/post.component';
+import { PostAction } from '../../models/post-action.model';
 
 @Component({
     selector: 'app-post-list',
@@ -16,9 +17,6 @@ import { PostComponent } from '../post/post.component';
 })
 export class PostListComponent {
     @Input() posts: Post[] = [];
-    @Output() action = new EventEmitter<{ postId: string; action: string }>();
+    @Output() action = new EventEmitter<PostAction>();
 
-    onAction(postId: string, action: string) {
-        this.action.emit({ postId, action });
-    }
 }

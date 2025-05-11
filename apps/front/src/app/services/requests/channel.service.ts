@@ -25,11 +25,6 @@ export class ChannelService {
         return this._channelsCache$;
     }
 
-    /** Сбрасывает кеш каналов */
-    clearChannelsCache(): void {
-        this._channelsCache$ = undefined;
-    }
-
     /** Возвращает посты для канала (кешируется по channelId) */
     getChannelPosts(channelId: string): Observable<Post[]> {
         if (!this._postsCache.has(channelId)) {

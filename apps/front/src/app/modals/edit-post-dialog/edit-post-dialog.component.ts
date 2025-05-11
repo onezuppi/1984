@@ -1,22 +1,19 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-    MAT_DIALOG_DATA,
-    MatDialogModule,
-    MatDialogRef
-} from '@angular/material/dialog';
-import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { EditPostForm } from './edit-post-form';
 
-import { EditPostForm, EditPostFormValue } from '../../forms/edit-post-form';
 
-export interface EditPostData {
+export interface EditPostDialogData {
+    /** Форма, уже инициализированная сервисом */
+    form: EditPostForm;
+    /** ID редактируемого поста */
     postId: string;
-    content: string;
-    attachments: string[];
 }
 
 @Component({
@@ -34,25 +31,14 @@ export interface EditPostData {
     templateUrl: './edit-post-dialog.component.html',
     styleUrls: ['./edit-post-dialog.component.scss']
 })
-export class EditPostDialogComponent implements OnInit {
-    form!: EditPostForm;
-    loading = true;
+export class EditPostDialogComponent {
+    form: EditPostForm;
 
     constructor(
-        private fb: FormBuilder,
-        private dialogRef: MatDialogRef<EditPostDialogComponent, EditPostData>,
-        @Inject(MAT_DIALOG_DATA) public data: EditPostData
-    ) {}
-
-    ngOnInit() {
-        // Показываем скелетон при инициализации
-        setTimeout(() => {
-            this.form = new EditPostForm(this.fb, {
-                content: this.data.content,
-                attachments: this.data.attachments
-            });
-            this.loading = false;
-        }, 500);
+        @Inject(MAT_DIALOG_DATA) public data: EditPostDialogData,
+        private dialogRef: MatDialogRef<EditPostDialogComponent, { postId: string; content: string; attachments: string[] }>
+    ) {
+        this.form = data.form;
     }
 
     addAttachment(event: Event) {
@@ -72,12 +58,12 @@ export class EditPostDialogComponent implements OnInit {
     }
 
     save() {
-        if (!this.form.invalid) {
-            const value: EditPostFormValue = this.form.getValue();
+        if (this.form.valid) {
+            const { content, attachments } = this.form.getValue();
             this.dialogRef.close({
                 postId: this.data.postId,
-                content: value.content,
-                attachments: value.attachments
+                content,
+                attachments
             });
         }
     }

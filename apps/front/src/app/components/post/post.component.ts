@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Post } from '../../models/post.model';
 import { ImagePreviewComponent } from '../image-preview/image-preview.component';
+import { PostAction, PostActionType } from '../../models/post-action.model';
 
 @Component({
     selector: 'app-post',
@@ -16,9 +17,9 @@ import { ImagePreviewComponent } from '../image-preview/image-preview.component'
 })
 export class PostComponent {
     @Input() post!: Post;
-    @Output() action = new EventEmitter<{ postId: string; action: string }>();
+    @Output() action = new EventEmitter<PostAction>();
 
     onEdit() {
-        this.action.emit({ postId: this.post.id, action: 'edit' });
+        this.action.emit({ post: this.post, action: 'edit' });
     }
 }
