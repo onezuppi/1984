@@ -1,11 +1,5 @@
-<mat-toolbar color="primary">
-    Инструкция: как подключить нашего бота для сбора данных
-</mat-toolbar>
-
-<div class="content">
+<app-page-layout [title]="pageTitle">
     <mat-accordion>
-        
-        <!-- Шаг 1: раскрыт по умолчанию -->
         <mat-expansion-panel [expanded]="true">
             <mat-expansion-panel-header>
                 <mat-panel-title>1. Запустите бота в личном чате</mat-panel-title>
@@ -20,7 +14,6 @@
             </mat-card>
         </mat-expansion-panel>
         
-        <!-- Шаг 2 -->
         <mat-expansion-panel>
             <mat-expansion-panel-header>
                 <mat-panel-title>2. Откройте сведения о канале или группе</mat-panel-title>
@@ -36,7 +29,6 @@
             </mat-card>
         </mat-expansion-panel>
         
-        <!-- Шаг 3 -->
         <mat-expansion-panel>
             <mat-expansion-panel-header>
                 <mat-panel-title>3. Добавьте бота в список администраторов</mat-panel-title>
@@ -68,7 +60,6 @@
             </mat-card>
         </mat-expansion-panel>
         
-        <!-- Шаг 5 -->
         <mat-expansion-panel>
             <mat-expansion-panel-header>
                 <mat-panel-title>5. Перезагрузите страницу сервиса</mat-panel-title>
@@ -83,6 +74,5 @@
                 </mat-card-content>
             </mat-card>
         </mat-expansion-panel>
-    
     </mat-accordion>
-</div>
+</app-page-layout>

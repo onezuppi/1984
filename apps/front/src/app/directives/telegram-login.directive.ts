@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { TELEGRAM_BOT_ID } from '../tokens/telegram-bot-id.token';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Observable, switchMap } from 'rxjs';
-import { TelegramUser } from '../interfaces/telegram-user.interface';
+import { TelegramUser } from '../models/telegram-user.model';
 
 @Directive({
     selector: '[telegramLogin]',

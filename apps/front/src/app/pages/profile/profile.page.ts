@@ -1,7 +1,5 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../../services/auth.service';
 
 @Component({
     selector: 'app-profile-page',
@@ -12,17 +10,6 @@ import { AuthService } from '../../services/auth.service';
     templateUrl: './profile.page.html',
     styleUrls: ['./profile.page.scss']
 })
-export class ProfilePage implements OnInit {
+export class ProfilePage {
 
-    protected profile$!: Observable<{ name: string; avatar: string | null }>;
-
-    private readonly auth: AuthService = inject(AuthService);
-
-    ngOnInit(): void {
-        this.profile$ = this.auth.getUserData();
-    }
-
-    logout(): void {
-        this.auth.logout();
-    }
 }

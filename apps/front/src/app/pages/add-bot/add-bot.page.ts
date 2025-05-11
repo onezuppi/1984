@@ -4,6 +4,7 @@ import { MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionP
 import { MatList, MatListItem } from '@angular/material/list';
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { MatToolbar } from '@angular/material/toolbar';
+import { PageLayoutComponent } from '../../components/page-layout/page-layout.component';
 
 @Component({
     selector: 'app-add-bot-page',
@@ -20,11 +21,13 @@ import { MatToolbar } from '@angular/material/toolbar';
         MatCard,
         MatCardContent,
         MatAccordion,
-        MatToolbar
+        MatToolbar,
+        PageLayoutComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddBotPage {
-    botUsername = '@YourBotUsername';
-    channelName = 'НазваниеВашегоКанала';
+    protected readonly pageTitle: string = 'Инструкция: как подключить нашего бота для сбора данных';
+    protected readonly botUsername: string = '@YourBotUsername';
+    protected readonly channelName: string = 'НазваниеВашегоКанала';
 }

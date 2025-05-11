@@ -1,0 +1,34 @@
+<!-- Скелетон для селектора каналов -->
+<div *ngIf="loadingChannels()" class="skeleton-container">
+    <div class="skeleton-line title"></div>
+    <div class="skeleton-line select"></div>
+</div>
+
+<app-channel-selector
+    *ngIf="!loadingChannels()"
+    [channels]="channels"
+    [selectedChannelId]="selectedChannelId"
+    (channelChange)="onChannelChange($event)">
+</app-channel-selector>
+
+<!-- Кнопка регенерации — только после первой загрузки постов -->
+<div class="actions" *ngIf="posts.length && !loadingPosts()">
+    <button
+        mat-raised-button
+        color="primary"
+        (click)="regeneratePosts()">
+        Прегенерировать посты
+    </button>
+</div>
+
+<!-- Спиннер во время загрузки постов -->
+<div *ngIf="loadingPosts()" class="loading-spinner">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>
+
+<!-- Список постов -->
+<app-post-list
+    *ngIf="!loadingPosts()"
+    [posts]="posts"
+    (action)="onPostAction($event)">
+</app-post-list>
