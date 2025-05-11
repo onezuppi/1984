@@ -1,0 +1,9 @@
+<mat-grid-list [cols]="5" rowHeight="80px" class="preview-grid">
+    <mat-grid-tile *ngFor="let url of images">
+        <img
+            [src]="url"
+            alt="Attachment thumbnail"
+            class="thumbnail"
+            (click)="openPreview(url)" />
+    </mat-grid-tile>
+</mat-grid-list>

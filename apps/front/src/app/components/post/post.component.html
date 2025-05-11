@@ -9,9 +9,5 @@
         {{ post.content }}
     </mat-card-content>
     
-    <div *ngIf="post.attachments?.length" class="post__attachments">
-        <div *ngFor="let url of post.attachments" class="post__attachment">
-            <img [src]="url" alt="Attachment" class="post__attachment-img"/>
-        </div>
-    </div>
+    <app-image-preview *ngIf="post.attachments?.length" [images]="post.attachments!"></app-image-preview>
 </mat-card>

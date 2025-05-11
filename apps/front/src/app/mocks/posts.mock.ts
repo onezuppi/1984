@@ -7,7 +7,7 @@ export const POSTS_MOCK: Post[] = [
         id: '1',
         channelId: '1',
         content: `Обновление Angular 15 вышло! Теперь можно создавать standalone-компоненты без NgModule, а CLI получил новые полезные флаги.`,
-        attachments: ['https://cdn-icons-png.flaticon.com/512/25/25333.png']
+        attachments: ['https://cdn-icons-png.flaticon.com/512/25/25333.png', 'https://cdn-icons-png.flaticon.com/512/25/25333.png']
     },
     {
         id: '2',
@@ -24,7 +24,7 @@ export const POSTS_MOCK: Post[] = [
 - switchMap отменяет предыдущие подписки  
 - mergeMap запускает все параллельно  
 - concatMap выполняет по очереди`,
-        attachments: ['https://cdn-icons-png.flaticon.com/512/25/25333.png']
+        attachments: ['https://cdn-icons-png.flaticon.com/512/25/25333.png', 'https://cdn-icons-png.flaticon.com/512/25/25333.png']
     },
     {
         id: '4',
@@ -41,7 +41,7 @@ export const POSTS_MOCK: Post[] = [
 1. Переопределяем SCSS-переменные  
 2. Создаём light/dark темы  
 3. Подключаем шрифты и иконки`,
-        attachments: ['https://cdn-icons-png.flaticon.com/512/25/25333.png']
+        attachments: ['https://cdn-icons-png.flaticon.com/512/25/25333.png', 'https://cdn-icons-png.flaticon.com/512/25/25333.png']
     },
     {
         id: '6',
@@ -58,7 +58,7 @@ export const POSTS_MOCK: Post[] = [
 • Интеграция с TensorFlow.js  
 • Токенизация и лемматизация  
 • Классификация тональности`,
-        attachments: ['https://cdn-icons-png.flaticon.com/512/25/25333.png']
+        attachments: ['https://cdn-icons-png.flaticon.com/512/25/25333.png', 'https://cdn-icons-png.flaticon.com/512/25/25333.png']
     },
     {
         id: '8',
@@ -75,7 +75,7 @@ export const POSTS_MOCK: Post[] = [
 - Улучшенные условные типы  
 - Шаблонные литералы как типы  
 - Новые утилиты в стандартной библиотеке`,
-        attachments: ['https://cdn-icons-png.flaticon.com/512/25/25333.png']
+        attachments: ['https://cdn-icons-png.flaticon.com/512/25/25333.png', 'https://cdn-icons-png.flaticon.com/512/25/25333.png']
     },
     {
         id: '10',
@@ -124,6 +124,6 @@ export const POSTS_MOCK: Post[] = [
 • loadComponent для lazy loading  
 • Data resolvers  
 • Предзагрузка модулей`,
-        attachments: ['https://cdn-icons-png.flaticon.com/512/25/25333.png']
+        attachments: ['https://cdn-icons-png.flaticon.com/512/25/25333.png', 'https://cdn-icons-png.flaticon.com/512/25/25333.png']
     }
 ];
