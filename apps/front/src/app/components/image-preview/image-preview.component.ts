@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
-import { ImageDialogComponent } from '../image-dialog/image-dialog.component';
 import { MatCardModule } from '@angular/material/card';
+import { ImageDialogComponent } from '../../modals/image-dialog/image-dialog.component';
 
 
 @Component({

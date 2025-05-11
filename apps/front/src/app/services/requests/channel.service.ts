@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay, shareReplay } from 'rxjs/operators';
-import { Channel } from '../models/channel.model';
-import { Post } from '../models/post.model';
-import { CHANNELS_MOCK } from '../mocks/channels.mock';
-import { POSTS_MOCK } from '../mocks/posts.mock';
+import { POSTS_MOCK } from '../../mocks/posts.mock';
+import { CHANNELS_MOCK } from '../../mocks/channels.mock';
+import { Post } from '../../models/post.model';
+import { Channel } from '../../models/channel.model';
 
 const CHANNELS_LOAD_DELAY = 1000;
 const POSTS_LOAD_DELAY = 1500;
@@ -23,6 +23,11 @@ export class ChannelService {
             );
         }
         return this._channelsCache$;
+    }
+
+    /** Сбрасывает кеш каналов */
+    clearChannelsCache(): void {
+        this._channelsCache$ = undefined;
     }
 
     /** Возвращает посты для канала (кешируется по channelId) */

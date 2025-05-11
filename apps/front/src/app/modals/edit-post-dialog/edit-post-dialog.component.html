@@ -1,0 +1,54 @@
+<ng-container *ngIf="!loading; else skeleton">
+    <h2 mat-dialog-title>Редактировать пост</h2>
+    <mat-dialog-content [formGroup]="form">
+        <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Текст поста</mat-label>
+            <textarea matInput formControlName="content" rows="6"></textarea>
+        </mat-form-field>
+        
+        <div formArrayName="attachments" class="attachments">
+            <div
+                *ngFor="let ctrl of form.attachments.controls; let i = index"
+                class="attachment-item"
+            >
+                <img [src]="ctrl.value" alt="Preview" class="attachment-img" />
+                <button
+                    mat-icon-button
+                    color="warn"
+                    (click)="removeAttachment(i)"
+                    aria-label="Удалить изображение"
+                >
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </div>
+        </div>
+        
+        <button mat-button (click)="fileInput.click()">Добавить изображение</button>
+        <input
+            #fileInput
+            type="file"
+            accept="image/*"
+            hidden
+            (change)="addAttachment($event)"
+        />
+    </mat-dialog-content>
+    
+    <mat-dialog-actions align="end">
+        <button mat-button (click)="cancel()">Отмена</button>
+        <button
+            mat-raised-button
+            color="primary"
+            (click)="save()"
+            [disabled]="form.invalid"
+        >
+            Сохранить
+        </button>
+    </mat-dialog-actions>
+</ng-container>
+
+<ng-template #skeleton>
+    <h2>Загрузка...</h2>
+    <div class="skeleton skeleton-text"></div>
+    <div class="skeleton skeleton-text"></div>
+    <div class="skeleton skeleton-attachment" *ngFor="let i of [0,1,2]"></div>
+</ng-template>

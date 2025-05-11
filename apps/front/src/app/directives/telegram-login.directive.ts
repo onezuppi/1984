@@ -1,5 +1,5 @@
 import { DestroyRef, Directive, HostListener, inject, OnInit, } from '@angular/core';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../services/requests/auth.service';
 import { Router } from '@angular/router';
 import { TELEGRAM_BOT_ID } from '../tokens/telegram-bot-id.token';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
