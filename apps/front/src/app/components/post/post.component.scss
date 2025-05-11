@@ -1,0 +1,30 @@
+.post {
+    width: 100%;
+    box-sizing: border-box;
+
+    &__content {
+        white-space: pre-wrap;
+        font-size: 1rem;
+        line-height: 1.4;
+        padding-bottom: 8px;
+    }
+
+    &__attachments {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        gap: 8px;
+        margin-bottom: 8px;
+        margin-left: 8px;
+    }
+
+    &__attachment {
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    &__attachment-img {
+        max-height: 64px;
+        object-fit: cover;
+        display: block;
+    }
+}

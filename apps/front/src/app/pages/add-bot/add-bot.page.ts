@@ -16,12 +16,9 @@ import { PageLayoutComponent } from '../../components/page-layout/page-layout.co
         MatExpansionPanel,
         MatExpansionPanelHeader,
         MatExpansionPanelTitle,
-        MatList,
-        MatListItem,
         MatCard,
         MatCardContent,
         MatAccordion,
-        MatToolbar,
         PageLayoutComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,

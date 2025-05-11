@@ -1,0 +1,17 @@
+<mat-card class="post">
+    <mat-card-actions align="end" class="post__actions">
+        <button mat-icon-button (click)="onEdit()" aria-label="Редактировать">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+    </mat-card-actions>
+    
+    <mat-card-content class="post__content">
+        {{ post.content }}
+    </mat-card-content>
+    
+    <div *ngIf="post.attachments?.length" class="post__attachments">
+        <div *ngFor="let url of post.attachments" class="post__attachment">
+            <img [src]="url" alt="Attachment" class="post__attachment-img"/>
+        </div>
+    </div>
+</mat-card>

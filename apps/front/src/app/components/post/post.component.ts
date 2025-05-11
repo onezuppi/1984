@@ -4,21 +4,20 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Post } from '../../models/post.model';
-import { PostComponent } from '../post/post.component';
 
 @Component({
-    selector: 'app-post-list',
+    selector: 'app-post',
     standalone: true,
-    imports: [CommonModule, MatCardModule, MatIconModule, MatButtonModule, PostComponent],
-    templateUrl: './post-list.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    styleUrls: ['./post-list.component.scss']
+    imports: [CommonModule, MatCardModule, MatIconModule, MatButtonModule],
+    templateUrl: './post.component.html',
+    styleUrls: ['./post.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PostListComponent {
-    @Input() posts: Post[] = [];
+export class PostComponent {
+    @Input() post!: Post;
     @Output() action = new EventEmitter<{ postId: string; action: string }>();
 
-    onAction(postId: string, action: string) {
-        this.action.emit({ postId, action });
+    onEdit() {
+        this.action.emit({ postId: this.post.id, action: 'edit' });
     }
 }
