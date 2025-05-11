@@ -1,19 +1,24 @@
 import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { EditPostForm } from './edit-post-form';
+import { FileUploaderComponent } from '../../components/file-uploader/file-uploader.component';
 
 
 export interface EditPostDialogData {
-    /** Форма, уже инициализированная сервисом */
     form: EditPostForm;
-    /** ID редактируемого поста */
     postId: string;
+}
+
+export interface EditPostDialogResult {
+    postId: string;
+    content: string;
+    attachments: string[];
 }
 
 @Component({
@@ -22,11 +27,13 @@ export interface EditPostDialogData {
     imports: [
         CommonModule,
         MatDialogModule,
+        FormsModule,
         ReactiveFormsModule,
         MatFormFieldModule,
         MatInputModule,
         MatIconModule,
-        MatButtonModule
+        MatButtonModule,
+        FileUploaderComponent
     ],
     templateUrl: './edit-post-dialog.component.html',
     styleUrls: ['./edit-post-dialog.component.scss']
@@ -36,25 +43,9 @@ export class EditPostDialogComponent {
 
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: EditPostDialogData,
-        private dialogRef: MatDialogRef<EditPostDialogComponent, { postId: string; content: string; attachments: string[] }>
+        private dialogRef: MatDialogRef<EditPostDialogResult, { postId: string; content: string; attachments: string[] }>
     ) {
         this.form = data.form;
-    }
-
-    addAttachment(event: Event) {
-        const input = event.target as HTMLInputElement;
-        if (input.files?.[0]) {
-            const reader = new FileReader();
-            reader.onload = () => {
-                this.form.addAttachment(reader.result as string);
-            };
-            reader.readAsDataURL(input.files![0]);
-            input.value = '';
-        }
-    }
-
-    removeAttachment(index: number) {
-        this.form.removeAttachment(index);
     }
 
     save() {

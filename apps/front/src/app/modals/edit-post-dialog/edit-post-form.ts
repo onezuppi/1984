@@ -9,8 +9,9 @@ export class EditPostForm extends FormGroup<{
     content: FormControl<string>;
     attachments: FormArray<FormControl<string>>;
 }> {
-    /** Доступ к контролам напрямую через свойства */
+    /** Контрол для содержимого поста */
     readonly content: FormControl<string>;
+    /** Массив контролов для Base64-строк вложений */
     readonly attachments: FormArray<FormControl<string>>;
 
     constructor(private fb: FormBuilder, initial: EditPostFormValue) {
@@ -20,28 +21,19 @@ export class EditPostForm extends FormGroup<{
                 validators: [Validators.required]
             }),
             attachments: fb.array(
-                (initial.attachments || []).map(url =>
-                    fb.control(url, { nonNullable: true })
+                (initial.attachments || []).map(b64 =>
+                    fb.control(b64, { nonNullable: true })
                 )
             )
         });
 
-        // Привязываем контролы к публичным свойствам
         this.content = this.controls.content;
         this.attachments = this.controls.attachments;
     }
 
-    /** Добавить URL вложения */
-    addAttachment(url: string) {
-        this.attachments.push(this.fb.control(url, { nonNullable: true }));
-    }
-
-    /** Удалить вложение по индексу */
-    removeAttachment(index: number) {
-        this.attachments.removeAt(index);
-    }
-
-    /** Собрать текущее значение формы */
+    /**
+     * Собрать текущее значение формы
+     */
     getValue(): EditPostFormValue {
         return {
             content: this.content.value,

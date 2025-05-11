@@ -1,0 +1,8 @@
+<mat-form-field appearance="fill" class="file-upload-field">
+    <mat-label>Файл</mat-label>
+    <input matInput [value]="filename" placeholder="Файл не выбран" disabled />
+    <button mat-icon-button matSuffix (click)="fileInput.click()" [disabled]="disabled">
+        <mat-icon>attach_file</mat-icon>
+    </button>
+    <input #fileInput type="file" (change)="onFileSelected($event)" hidden />
+</mat-form-field>

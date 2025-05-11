@@ -5,31 +5,9 @@
         <textarea matInput formControlName="content" rows="6"></textarea>
     </mat-form-field>
     
-    <div formArrayName="attachments" class="attachments">
-        <div
-            *ngFor="let ctrl of form.attachments.controls; let i = index"
-            class="attachment-item"
-        >
-            <img [src]="ctrl.value" alt="Preview" class="attachment-img"/>
-            <button
-                mat-icon-button
-                color="warn"
-                (click)="removeAttachment(i)"
-                aria-label="Удалить изображение"
-            >
-                <mat-icon>delete</mat-icon>
-            </button>
-        </div>
-    </div>
-    
-    <button mat-button (click)="fileInput.click()">Добавить изображение</button>
-    <input
-        #fileInput
-        type="file"
-        accept="image/*"
-        hidden
-        (change)="addAttachment($event)"
-    />
+    <app-file-uploader
+        formControlName="attachments"
+    ></app-file-uploader>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
