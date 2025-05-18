@@ -1,18 +1,18 @@
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 export interface EditPostFormValue {
     content: string;
-    attachments: string[];
+    attachments: string[] | null;
 }
 
 export class EditPostForm extends FormGroup<{
     content: FormControl<string>;
-    attachments: FormArray<FormControl<string>>;
+    attachments: FormControl<string[] | null>;
 }> {
     /** Контрол для содержимого поста */
     readonly content: FormControl<string>;
     /** Массив контролов для Base64-строк вложений */
-    readonly attachments: FormArray<FormControl<string>>;
+    readonly attachments: FormControl<string[] | null>;
 
     constructor(private fb: FormBuilder, initial: EditPostFormValue) {
         super({
@@ -20,11 +20,9 @@ export class EditPostForm extends FormGroup<{
                 nonNullable: true,
                 validators: [Validators.required]
             }),
-            attachments: fb.array(
-                (initial.attachments || []).map(b64 =>
-                    fb.control(b64, { nonNullable: true })
-                )
-            )
+            attachments: fb.control(initial.attachments || [], {
+                nonNullable: false,
+            }),
         });
 
         this.content = this.controls.content;

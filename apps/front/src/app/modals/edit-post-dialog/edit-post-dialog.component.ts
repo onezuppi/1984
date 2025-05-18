@@ -54,7 +54,7 @@ export class EditPostDialogComponent {
             this.dialogRef.close({
                 postId: this.data.postId,
                 content,
-                attachments
+                attachments: attachments ?? []
             });
         }
     }

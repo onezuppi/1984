@@ -1,8 +1,24 @@
 <mat-form-field appearance="fill" class="file-upload-field">
-    <mat-label>Файл</mat-label>
-    <input matInput [value]="filename" placeholder="Файл не выбран" disabled />
+    <mat-label>Выбранные файлы</mat-label>
+    <input matInput [value]="filename" placeholder="Выберете файлы" readonly (click)="fileInput.click()"/>
     <button mat-icon-button matSuffix (click)="fileInput.click()" [disabled]="disabled">
         <mat-icon>attach_file</mat-icon>
     </button>
-    <input #fileInput type="file" (change)="onFileSelected($event)" hidden />
+    <button *ngIf="!!value" matSuffix mat-icon-button aria-label="Clear" (click)="value = null; filename = '';">
+        <mat-icon>close</mat-icon>
+    </button>
+    <input #fileInput type="file" multiple (change)="onFileSelected($event)" hidden/>
 </mat-form-field>
+<ng-container *ngIf="!isLoading; else loadingTpl">
+    <div class="preview-container" *ngIf="!!value?.length">
+        <img
+            *ngFor="let src of value; let i = index"
+            [src]="src"
+            [alt]="'preview ' + (i + 1)"
+            class="preview-img"
+        />
+    </div>
+</ng-container>
+<ng-template #loadingTpl>
+    <mat-spinner></mat-spinner>
+</ng-template>
