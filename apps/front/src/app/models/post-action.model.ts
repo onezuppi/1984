@@ -1,6 +1,6 @@
 import { Post } from './post.model';
 
-export type PostActionType = 'edit' | 'publish';
+export type PostActionType = 'edit' | 'publish' | 'delete';
 
 export interface PostAction {
     post: Post;

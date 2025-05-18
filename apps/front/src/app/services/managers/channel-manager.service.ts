@@ -3,8 +3,9 @@ import { Post } from '../../models/post.model';
 import { ChannelService } from '../requests/channel.service';
 import { Channel } from '../../models/channel.model';
 import { EditPostDialogService } from '../../modals/edit-post-dialog/edit-post-dialog-modal.service';
-import { tap } from 'rxjs';
+import { take, tap } from 'rxjs';
 import { PostAction } from '../../models/post-action.model';
+import { ConfirmationService } from '../../modals/confirm-dialog/confirmation-modal.service';
 
 
 @Injectable({ providedIn: 'root' })
@@ -19,6 +20,7 @@ export class ChannelManagerService {
     constructor(
         private readonly _channelService: ChannelService,
         private readonly _editPostDialogService: EditPostDialogService,
+        private readonly _confirmService: ConfirmationService,
     ) {
         // Инициализация: загрузка каналов и реакция на выбор
         this.loadChannels();
@@ -66,6 +68,8 @@ export class ChannelManagerService {
             this.editPost(post);
         } else if (action === 'publish') {
             this.publishPost(post);
+        } else if (action === 'delete') {
+            this.deletePost(post);
         }
     }
 
@@ -74,9 +78,23 @@ export class ChannelManagerService {
         this._editPostDialogService
             .showModal(post)
             .pipe(
-                tap(console.log)
+                tap(console.log),
+                take(1)
             )
             .subscribe();
+    }
+
+    /** удалить пост */
+    deletePost(post: Post): void {
+        this._confirmService
+            .confirm(
+                'Удалить публикацию?',
+                'Это действие необратимо. Вы действительно хотите удалить этот пост?'
+            )
+            .pipe(
+                take(1)
+            )
+            .subscribe()
     }
 
     /** Открываем диалог публикации */

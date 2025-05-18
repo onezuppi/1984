@@ -1,8 +1,22 @@
 <mat-card class="post">
     <mat-card-actions align="end" class="post__actions">
-        <button mat-icon-button (click)="onEdit()" aria-label="Редактировать">
+        <button mat-icon-button [matMenuTriggerFor]="actionsMenu" aria-label="Редактировать">
             <mat-icon>more_vert</mat-icon>
         </button>
+        <mat-menu #actionsMenu="matMenu">
+            <button mat-menu-item (click)="onPublish()">
+                <mat-icon>publish</mat-icon>
+                <span>Опубликовать</span>
+            </button>
+            <button mat-menu-item (click)="onEdit()">
+                <mat-icon>edit</mat-icon>
+                <span>Редактировать</span>
+            </button>
+            <button mat-menu-item (click)="onDelete()">
+                <mat-icon>delete</mat-icon>
+                <span>Удалить</span>
+            </button>
+        </mat-menu>
     </mat-card-actions>
     
     <mat-card-content class="post__content">
