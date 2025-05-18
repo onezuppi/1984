@@ -4,7 +4,7 @@
     <button mat-icon-button matSuffix (click)="fileInput.click()" [disabled]="disabled">
         <mat-icon>attach_file</mat-icon>
     </button>
-    <button *ngIf="!!value" matSuffix mat-icon-button aria-label="Clear" (click)="value = null; filename = '';">
+    <button *ngIf="!!value" matSuffix mat-icon-button aria-label="Clear" (click)="clear()">
         <mat-icon>close</mat-icon>
     </button>
     <input #fileInput type="file" multiple (change)="onFileSelected($event)" hidden/>
