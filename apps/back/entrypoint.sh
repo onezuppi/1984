@@ -2,4 +2,4 @@
 set -e
 
 poetry run start &
-poetry run python bot/main.py
+poetry run bot

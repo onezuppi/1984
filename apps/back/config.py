@@ -8,9 +8,10 @@ class Settings(BaseSettings):
     BOT_TOKEN: str
     JWT_SECRET: str
     ALGORITHM: str = "HS256"
-    FRONTEND_URL: str = "http://localhost:4200"
-    BACKEND_URL: str = "http://localhost:8080/api"
-    APP_HOST: str = "0.0.0.0"
+    # не дает открывать ссылки без https
+    FRONTEND_URL: str = "https://github.com/"
+    BACKEND_URL: str = "http://127.0.0.1:8080/api"
+    APP_HOST: str = "127.0.0.1"
     APP_PORT: int = 8080
     DEBUG: bool = False
 
