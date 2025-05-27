@@ -4,9 +4,16 @@ RUN pip install poetry
 
 WORKDIR /app
 
-COPY pyproject.toml poetry.lock main.py /app/
+COPY pyproject.toml poetry.lock /app/
+COPY main.py /app/
+COPY config.py /app/
+COPY .env /app/
 COPY back/ /app/back
+COPY bot/ /app/bot
 
-RUN poetry install
+RUN poetry lock && poetry install
 
-ENTRYPOINT ["poetry", "run", "start"]
+COPY entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
+
+ENTRYPOINT ["/app/entrypoint.sh"]

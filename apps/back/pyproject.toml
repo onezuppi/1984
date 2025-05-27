@@ -9,6 +9,7 @@ requires-python = ">=3.12,<4.0"
 
 [tool.poetry.scripts]
 start = 'main:start'
+bot = "bot.run_bot:run"
 
 [tool.poetry.dependencies]
 fastapi = {extras = ["standard"], version = "^0.115.11"}
@@ -16,3 +17,5 @@ pymongo = "^4.11.2"
 pydantic-settings = "^2.8.1"
 motor = "^3.7.0"
 pyjwt = "^2.10.1"
+aiogram = "^3.20.0.post0"
+aiohttp = ">=3.9.0,<3.12"
