@@ -14,6 +14,7 @@ class Settings(BaseSettings):
     APP_HOST: str = "127.0.0.1"
     APP_PORT: int = 8080
     DEBUG: bool = False
+    REDIS_URL: str = "redis://127.0.0.1:6379/0"
 
     class Config:
         env_file = ".env"

@@ -1,4 +1,5 @@
-from pydantic import BaseModel
+from typing import List
+from pydantic import BaseModel, HttpUrl, EmailStr
 
 
 class AuthLinkRequest(BaseModel):
@@ -7,7 +8,7 @@ class AuthLinkRequest(BaseModel):
 
 
 class AuthLinkResponse(BaseModel):
-    url: str
+    url: HttpUrl
 
 
 class TokenRequest(BaseModel):
