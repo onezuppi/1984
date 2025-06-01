@@ -27,6 +27,7 @@ class Settings(BaseSettings):
 
     USERS_COLLECTION: str = "users"
     PHOTO_COLLECTION: str = "photos"
+    ADMIN_CHANNEL_COLLECTION: str = "admin_channels"
 
     @property
     def MONGO_URI(self) -> str:

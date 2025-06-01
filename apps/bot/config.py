@@ -16,6 +16,8 @@ class Settings(BaseSettings):
     MONGO_USERNAME: str
     MONGO_PASSWORD: str
 
+    ADMIN_CHANNEL_COLLECTION: str = "admin_channels"
+
     @property
     def MONGO_URI(self) -> str:
         user = urllib.parse.quote_plus(self.MONGO_USERNAME)
