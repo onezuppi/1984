@@ -1,17 +1,30 @@
 <div class="profile-card">
     <div class="profile-container">
-        <ng-container *ngIf="userService.avatar$ | async as url">
+        <!-- Аватар: если есть URL, показываем картинку; иначе – skeleton -->
+        <ng-container *ngIf="userService.avatar$ | async as url; else avatarSkeleton">
             <img mat-card-avatar [src]="url" alt="Аватар" class="profile-avatar" />
         </ng-container>
-        <ng-container *ngIf="userService.user$ | async as user" >
+        <ng-template #avatarSkeleton>
+            <div class="profile-avatar-skeleton"></div>
+        </ng-template>
+
+        <!-- Имя: если есть объект user – выводим, иначе – skeleton -->
+        <ng-container *ngIf="userService.user$ | async as user; else nameSkeleton">
             <div class="profile-name">
-                @if (user?.first_name && user?.last_name) {
+                <ng-container *ngIf="user.first_name && user.last_name; else onlyUsername">
                     <div class="first-name">{{ user.first_name }}</div>
                     <div class="last-name">{{ user.last_name }}</div>
-                } @else if (user?.username) {
+                </ng-container>
+                <ng-template #onlyUsername>
                     <div class="last-name">{{ user.username }}</div>
-                }
+                </ng-template>
             </div>
         </ng-container>
+        <ng-template #nameSkeleton>
+            <div class="profile-name">
+                <div class="text-skeleton name-line-1"></div>
+                <div class="text-skeleton name-line-2"></div>
+            </div>
+        </ng-template>
     </div>
 </div>
