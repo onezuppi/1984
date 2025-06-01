@@ -11,6 +11,14 @@
     flex-direction: column;
     justify-content: space-between;
     height: calc(100% - 16px);
+
+    &:not(.is-opened) {
+        padding: 0 10px;
+    }
+}
+
+.nav-list-inner {
+    margin-top: 16px;
 }
 
 .nav-list {

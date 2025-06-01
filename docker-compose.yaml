@@ -8,6 +8,14 @@ services:
     depends_on:
       - mongodb
       - redis
+      - tg-bot
+
+  tg-bot:
+    container_name: tg-bot
+    build:
+      context: ./apps/bot
+    env_file:
+      - .env
 
   mongodb:
     image: mongo
@@ -25,16 +33,13 @@ services:
       - mongodb-log:/var/log/mongodb
 
   redis:
-    image: "${REDIS_IMAGE}"
+    image: "redis:7.0-alpine"
     container_name: redis_container
     ports:
-      - "${REDIS_PORT}:${REDIS_PORT}"
+      # close on prod
+      - "6379:6379"
     volumes:
       - redis-data:/data
-      - ${REDIS_CONF_PATH}:/usr/local/etc/redis/redis.conf
-    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
-    env_file:
-      - .env
     restart: always
 
   nginx:

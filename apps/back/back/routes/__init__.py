@@ -1,3 +1,4 @@
-from .tg_auth import router as tg_auth_router
+from .auth import router as auth_router
+from .user import router as user_router
 
-__all__ = ["tg_auth_router"]
+__all__ = ["auth_router", "user_router"]

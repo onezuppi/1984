@@ -1,17 +1,19 @@
 <mat-sidenav-container class="sidenav-container">
     <mat-sidenav #drawer mode="side" [opened]="opened" class="sidenav">
-        <mat-nav-list class="sidenav-list">
+        <mat-nav-list class="sidenav-list" [class.is-opened]="opened">
             <section class="nav-list">
-                <mat-list-item
-                    *ngFor="let item of navItems"
-                    [routerLink]="item.route"
-                    routerLinkActive="active-link"
-                >
-                    <section class="nav-list__item">
-                        <mat-icon>{{ item.icon }}</mat-icon>
-                        <span class="label">{{ item.label }}</span>
-                    </section>
-                </mat-list-item>
+                <div class="nav-list-inner">
+                    <mat-list-item
+                        *ngFor="let item of navItems"
+                        [routerLink]="item.route"
+                        routerLinkActive="active-link"
+                    >
+                        <section class="nav-list__item">
+                            <mat-icon>{{ item.icon }}</mat-icon>
+                            <span class="label">{{ item.label }}</span>
+                        </section>
+                    </mat-list-item>
+                </div>
             </section>
             <a mat-list-item (click)="logout()" class="logout">
                 <section class="nav-list__item">

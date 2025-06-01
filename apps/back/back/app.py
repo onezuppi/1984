@@ -1,16 +1,15 @@
 from fastapi import FastAPI
 
 from config import settings
-from .routes import tg_auth_router
-from .utils.redis import init_redis, close_redis
+from .routes import auth_router, user_router
+from .utils.db import lifespan
 
 app = FastAPI(
     title="Auth Service",
     debug=settings.DEBUG,
     root_path="/api",
+    lifespan=lifespan,
 )
 
-app.include_router(tg_auth_router, prefix="", tags=["TG Auth"])
-
-app.add_event_handler("startup", init_redis)
-app.add_event_handler("shutdown", close_redis)
+for rout in (auth_router, user_router):
+    app.include_router(rout)
