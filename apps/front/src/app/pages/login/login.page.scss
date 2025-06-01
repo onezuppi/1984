@@ -1,7 +1,73 @@
-.login {
+@use 'mixins/bg' as *;
+
+.login-container {
+    @include center-page-gradient;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 400px;
+    padding: 24px;
+    box-sizing: border-box;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logo-container {
+    margin-bottom: 16px;
+}
+
+.app-logo {
+    width: 100%;
+    object-fit: contain;
+}
+
+.login-title {
+    font-size: 24px;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 16px;
+    color: #333333;
+}
+
+.login-subtitle {
+    font-size: 14px;
+    color: #666666;
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.login-actions {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+}
+
+.telegram-login-button {
+    width: 100%;
+    max-width: 300px;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100%;
-    gap: 8px;
+}
+
+.telegram-icon {
+    margin-right: 8px;
+    font-size: 20px;
+}
+
+@media (max-width: 360px) {
+    .login-card {
+        max-width: 100%;
+        padding: 16px;
+    }
+
+    .telegram-login-button {
+        max-width: 100%;
+    }
 }

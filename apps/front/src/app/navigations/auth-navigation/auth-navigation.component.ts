@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { NAV_ROUTES } from '../../nav.config';
 import { MatButtonModule } from '@angular/material/button';
-import { AuthService } from '../../services/requests/auth.service';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
 

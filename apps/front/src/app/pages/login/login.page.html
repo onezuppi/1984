@@ -1,10 +1,23 @@
-<mat-card class="login">
-    <mat-card-title>
-        Вход в приложение
-    </mat-card-title>
-    <mat-card-actions>
-        <div class="button-flex-container">
-            <button mat-raised-button color="primary" telegramLogin> Войти через Telegram</button>
+<div class="login-container">
+    <mat-card class="login-card">
+        <div class="logo-container">
+            <img src="assets/images/logo.png" alt="Логотип" class="app-logo" />
         </div>
-    </mat-card-actions>
-</mat-card>
+
+        <mat-card-title class="login-title">
+            Вход в приложение
+        </mat-card-title>
+
+        <mat-card-actions class="login-actions">
+            <button
+                mat-raised-button
+                color="primary"
+                class="telegram-login-button"
+                (click)="login()"
+            >
+                <mat-icon class="telegram-icon">telegram</mat-icon>
+                Войти через Telegram
+            </button>
+        </mat-card-actions>
+    </mat-card>
+</div>

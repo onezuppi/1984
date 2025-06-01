@@ -1,0 +1,52 @@
+@use 'mixins/bg' as *;
+
+.not-found-wrapper {
+    @include center-page-gradient;
+}
+
+mat-card {
+    padding: 2.5rem 2rem 2rem 2rem;
+    max-width: 360px;
+    text-align: center;
+    border-radius: 24px;
+    box-shadow: 0 10px 32px rgba(60, 60, 140, 0.12);
+    background: #ffffff;
+}
+
+.icon-wrap {
+    margin-bottom: 10px;
+}
+
+.big-icon {
+    margin-bottom: 4px;
+    color: #1976d2;
+}
+
+h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin: 0 0 4px 0;
+    color: #1976d2;
+}
+
+h2 {
+    font-size: 1.25rem;
+    margin: 0 0 18px 0;
+    color: #616161;
+}
+
+p {
+    font-size: 1rem;
+    margin: 0 0 8px 0;
+    color: #666666;
+}
+
+.link {
+    color: #1976d2;
+    text-decoration: underline;
+    font-weight: 500;
+    transition: color 0.2s;
+    &:hover {
+        color: #1565c0;
+    }
+}

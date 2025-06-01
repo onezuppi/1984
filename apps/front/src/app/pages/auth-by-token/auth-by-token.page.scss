@@ -1,0 +1,5 @@
+@use 'mixins/bg' as *;
+
+.loader-overlay {
+    @include center-page-gradient;
+}
