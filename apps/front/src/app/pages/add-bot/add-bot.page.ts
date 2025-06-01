@@ -4,6 +4,7 @@ import { PageLayoutComponent } from '../../components/page-layout/page-layout.co
 import { MatStep, MatStepLabel, MatStepper, MatStepperNext, MatStepperPrevious } from '@angular/material/stepper';
 import { TELEGRAM_BOT_USERNAME } from '../../tokens/telegram-bot-username.token';
 import { MatButton } from '@angular/material/button';
+import { RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-add-bot-page',
@@ -18,12 +19,12 @@ import { MatButton } from '@angular/material/button';
         MatStepLabel,
         MatButton,
         MatStepperNext,
-        MatStepperPrevious
+        MatStepperPrevious,
+        RouterLink
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddBotPage {
     protected readonly pageTitle: string = 'Инструкция: как подключить нашего бота для сбора данных';
     protected readonly botUsername: string = inject(TELEGRAM_BOT_USERNAME);
-    protected readonly channelName: string = 'НазваниеВашегоКанала';
 }

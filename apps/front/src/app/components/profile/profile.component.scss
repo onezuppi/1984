@@ -48,3 +48,26 @@
     line-height: 1.2;
     color: #333;
 }
+
+
+@media (max-width: 600px) {
+    .profile-name {
+        display: none !important;
+    }
+
+    .profile-avatar,
+    .profile-avatar-skeleton {
+        width: 48px;
+        height: 48px;
+        margin-right: 0;
+        margin-bottom: 0;
+    }
+
+    .profile-container {
+        justify-content: center;
+    }
+
+    .profile-card {
+        padding: 6px;
+    }
+}

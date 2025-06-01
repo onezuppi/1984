@@ -32,19 +32,18 @@ export class AuthNavigationComponent {
     protected readonly navItems = NAV_ROUTES.map(r => ({
         label: r.label,
         icon: r.icon,
-        route: `/${ r.path }`
+        route: `/cabinet/${ r.path }`
     }));
 
     protected opened = true;
 
     private readonly _auth: AuthService = inject(AuthService);
 
-
-    toggle() {
+    public toggle() {
         this.opened = !this.opened;
     }
 
-    logout(): void {
+    public logout(): void {
         this._auth.logout();
     }
 }

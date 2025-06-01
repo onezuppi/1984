@@ -1,6 +1,5 @@
 <div class="profile-card">
     <div class="profile-container">
-        <!-- Аватар: если есть URL, показываем картинку; иначе – skeleton -->
         <ng-container *ngIf="userService.avatar$ | async as url; else avatarSkeleton">
             <img mat-card-avatar [src]="url" alt="Аватар" class="profile-avatar" />
         </ng-container>
@@ -8,7 +7,6 @@
             <div class="profile-avatar-skeleton"></div>
         </ng-template>
 
-        <!-- Имя: если есть объект user – выводим, иначе – skeleton -->
         <ng-container *ngIf="userService.user$ | async as user; else nameSkeleton">
             <div class="profile-name">
                 <ng-container *ngIf="user.first_name && user.last_name; else onlyUsername">
@@ -20,6 +18,7 @@
                 </ng-template>
             </div>
         </ng-container>
+
         <ng-template #nameSkeleton>
             <div class="profile-name">
                 <div class="text-skeleton name-line-1"></div>

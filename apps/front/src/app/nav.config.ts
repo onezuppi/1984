@@ -1,6 +1,7 @@
 import { CanActivate } from '@angular/router';
 import { AddBotGuard } from './guards/add-bot-guard';
 import { InjectionToken, Type } from '@angular/core';
+import { ChannelsPage } from './pages/channels/channels.page';
 
 export interface NavRoute {
     path: string;
@@ -12,10 +13,17 @@ export interface NavRoute {
 
 export const NAV_ROUTES: NavRoute[] = [
     {
-        path: 'add-bot',
-        label: 'Добавить бота',
+        path: 'add-channel',
+        label: 'Добавить канал',
         icon: 'add',
         loadComponent: () => import('./pages/add-bot/add-bot.page').then(m => m.AddBotPage),
+        canActivate: []
+    },
+    {
+        path: 'channels',
+        label: 'Список каналов',
+        icon: 'list',
+        loadComponent: () => import('./pages/channels/channels.page').then(m => m.ChannelsPage),
         canActivate: []
     },
     {
