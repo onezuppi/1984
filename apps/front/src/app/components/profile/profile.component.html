@@ -1,0 +1,16 @@
+<mat-card class="profile-card">
+    <div class="profile-container">
+        <ng-container *ngIf="userService.avatar$ | async as url">
+            <img mat-card-avatar [src]="url" alt="Аватар" class="profile-avatar" />
+        </ng-container>
+        <div class="profile-name" *ngIf="userService.user$ | async as user">
+            @if (user.first_name && user.last_name) {
+                <div class="first-name">{{ user.first_name }}</div>
+                <div class="last-name">{{ user.last_name }}</div>
+            }
+            @if (user.username) {
+                <div class="last-name">{{ user.username }}</div>
+            }
+        </div>
+    </div>
+</mat-card>

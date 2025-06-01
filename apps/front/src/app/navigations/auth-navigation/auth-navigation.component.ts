@@ -8,6 +8,7 @@ import { RouterModule } from '@angular/router';
 import { NAV_ROUTES } from '../../nav.config';
 import { MatButtonModule } from '@angular/material/button';
 import { AuthService } from '../../services/auth/auth.service';
+import { ProfileComponent } from '../../components/profile/profile.component';
 
 @Component({
 
@@ -22,7 +23,8 @@ import { AuthService } from '../../services/auth/auth.service';
         MatListModule,
         MatIconModule,
         MatToolbarModule,
-        MatButtonModule
+        MatButtonModule,
+        ProfileComponent
     ],
     standalone: true
 })
