@@ -11,7 +11,7 @@ from back.utils.jwt import verify_and_get_user
 router = APIRouter(prefix="/user", tags=["User"])
 
 
-@router.get("/me", response_model=UserModel, dependencies=[Depends(verify_and_get_user)])
+@router.get("", response_model=UserModel, dependencies=[Depends(verify_and_get_user)])
 async def get_current_user(
         user_id: str = Depends(verify_and_get_user),
         users=Depends(get_users_collection),
@@ -24,7 +24,7 @@ async def get_current_user(
     return UserModel(**doc)
 
 
-@router.get("/me/photo")
+@router.get("/photo")
 async def get_my_photo(
         user_id: str = Depends(verify_and_get_user),
         photos=Depends(get_photos_collection),
@@ -40,7 +40,7 @@ async def get_my_photo(
     return Response(content=img_bytes, media_type="image/jpeg")
 
 
-@router.get("/me/channels", response_model=List[ChannelModel])
+@router.get("/channels", response_model=List[ChannelModel])
 async def get_user_channels(
     user_id: str = Depends(verify_and_get_user),
     channels=Depends(get_channels_collection),

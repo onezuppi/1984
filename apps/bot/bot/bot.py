@@ -2,7 +2,7 @@ from aiogram import Bot, Dispatcher
 from motor.motor_asyncio import AsyncIOMotorClient
 from redis.asyncio import Redis
 
-from bot.handlers import register_router, chat_member_router, group_member_router
+from bot.handlers import register_router, group_member_router
 from bot.middlewares import RedisMiddleware, MongoMiddleware, BotMiddleware
 from config import settings
 
@@ -19,7 +19,7 @@ async def main():
 
     dp.update.outer_middleware(BotMiddleware(bot))
 
-    for router in (register_router, chat_member_router, group_member_router):
+    for router in (register_router, group_member_router):
         dp.include_router(router)
 
     await dp.start_polling(bot)
