@@ -1,8 +1,8 @@
 <mat-sidenav-container class="sidenav-container">
     <mat-sidenav #drawer mode="side" [opened]="opened" class="sidenav">
         <mat-nav-list class="sidenav-list" [class.is-opened]="opened">
-            <app-profile/>
             <section class="nav-list">
+                <app-profile/>
                 <div class="nav-list-inner">
                     <mat-list-item
                         *ngFor="let item of navItems"
@@ -24,7 +24,7 @@
             </a>
         </mat-nav-list>
     </mat-sidenav>
-    <mat-sidenav-content>
+    <mat-sidenav-content class="d">
         <mat-toolbar>
             <button mat-icon-button (click)="toggle()">
                 <mat-icon>menu</mat-icon>

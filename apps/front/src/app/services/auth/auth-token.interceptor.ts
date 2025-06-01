@@ -22,30 +22,24 @@ type JwtPayload = { exp: number };
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
     private authService = inject(AuthService);
-    private isRefreshing = false;
-    private refreshTokenSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
+    private isRefreshing$ = new BehaviorSubject(false);
 
-    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        return this.authService.accessToken$.pipe(
-            take(1),
-            switchMap(token => {
-                if (token) {
-                    if (this.isTokenAlmostExpired(token)) {
+    public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        if (req.url.includes('/api/auth/')) {
+            return next.handle(req);
+        }
+
+        return this.authService.accessToken$
+            .pipe(
+                take(1),
+                switchMap(token => {
+                    if (!token || this.isTokenAlmostExpired(token)) {
                         return this.handleTokenRefresh(req, next);
                     }
-                    const authReq = this.addTokenHeader(req, token);
-                    return next.handle(authReq).pipe(
-                        catchError(err => {
-                            if (err instanceof HttpErrorResponse && err.status === 401) {
-                                return this.handleTokenRefresh(req, next);
-                            }
-                            return throwError(() => err);
-                        })
-                    );
-                }
-                return next.handle(req);
-            })
-        );
+
+                    return next.handle(this.addTokenHeader(req, token));
+                })
+            );
     }
 
     private addTokenHeader(request: HttpRequest<any>, token: string): HttpRequest<any> {
@@ -67,43 +61,37 @@ export class AuthInterceptor implements HttpInterceptor {
     }
 
     private handleTokenRefresh(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        if (!this.isRefreshing) {
-            this.isRefreshing = true;
-            this.refreshTokenSubject.next(null);
+        if (!this.isRefreshing$.value) {
+            this.isRefreshing$.next(true);
 
-            return this.authService.refreshAccessToken().pipe(
-                switchMap(success => {
-                    if (success) {
-                        return this.authService.accessToken$.pipe(
-                            filter(newToken => !!newToken),
-                            take(1),
-                            switchMap(newToken => {
-                                const authReq = this.addTokenHeader(request, newToken!);
-                                return next.handle(authReq);
-                            })
-                        );
-                    } else {
-                        this.authService.logout();
-                        return throwError(() => new Error('Refresh token failed'));
-                    }
-                }),
-                catchError(err => {
-                    this.authService.logout();
-                    return throwError(() => err);
-                }),
-                finalize(() => {
-                    this.isRefreshing = false;
-                })
-            );
+            return this.authService.refreshAccessToken()
+                .pipe(
+                    switchMap(success => {
+                        this.isRefreshing$.next(false);
+                        if (success) {
+                            return this.authService.accessToken$.pipe(
+                                filter(newToken => !!newToken),
+                                take(1),
+                                switchMap(newToken => next.handle(this.addTokenHeader(request, newToken!)))
+                            );
+                        } else {
+                            this.authService.logout();
+
+                            return throwError(() => new Error('Refresh token failed'));
+                        }
+                    }),
+                    catchError(err => {
+
+                        return throwError(() => err);
+                    }),
+                );
         } else {
-            return this.refreshTokenSubject.pipe(
-                filter(token => token !== null),
-                take(1),
-                switchMap(token => {
-                    const authReq = this.addTokenHeader(request, token!);
-                    return next.handle(authReq);
-                })
-            );
+            return this.isRefreshing$
+                .pipe(
+                    filter(isRefreshing => !isRefreshing),
+                    take(1),
+                    switchMap(() => this.handleTokenRefresh(request, next))
+                );
         }
     }
 }

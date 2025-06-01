@@ -1,9 +1,21 @@
+@use 'mixins/bg' as *;
+
+:host {
+    --mat-sidenav-container-background-color: transparent;
+    --mat-toolbar-container-background-color: transparent;
+}
+
 .sidenav-container {
     height: 100vh;
+    @include gradient-bg;
+}
+.d {
+    background: transparent;
 }
 
 .sidenav {
-    width: 200px;
+    width: 250px;
+    border-right: 1px solid #ccc;
 }
 
 .sidenav-list {

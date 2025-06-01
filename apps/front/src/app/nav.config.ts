@@ -25,11 +25,4 @@ export const NAV_ROUTES: NavRoute[] = [
         loadComponent: () => import('./pages/add-post/add-post.page').then(m => m.AddPostPage),
         canActivate: [AddBotGuard]
     },
-    {
-        path: 'profile',
-        label: 'Профиль',
-        icon: 'person',
-        loadComponent: () => import('./pages/profile/profile.page').then(m => m.ProfilePage),
-        canActivate: [AddBotGuard]
-    },
 ];

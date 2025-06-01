@@ -42,26 +42,24 @@ export class AuthService {
     }
 
     public refreshAccessToken(): Observable<boolean> {
-        const refreshToken = localStorage.getItem(this._refreshTokenKey);
 
-        if (!refreshToken) {
+        if (!this.refreshToken) {
             return throwError(() => new Error('No refresh token'));
         }
         return this._http.post<{ access_token: string; refresh_token?: string }>(
             '/api/auth/refresh',
-            { refresh_token: refreshToken }
+            { refresh_token: this.refreshToken }
         )
             .pipe(
                 map(response => {
                     this._access_token$.next(response.access_token);
                     if (response.refresh_token) {
-                        localStorage.setItem(this._refreshTokenKey, response.refresh_token);
-
+                        this.refreshToken = response.refresh_token;
                     }
 
                     return true;
                 }),
-                catchError => of(false),
+                catchError(() => of(false)),
             );
     }
 

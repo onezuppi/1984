@@ -4,7 +4,7 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { environment } from '../environments/environment';
-import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { TELEGRAM_BOT_USERNAME } from './tokens/telegram-bot-username.token';
 import { AuthInterceptor } from './services/auth/auth-token.interceptor';
 
@@ -22,7 +22,9 @@ export const appConfig: ApplicationConfig = {
         provideAnimations(),
         provideZoneChangeDetection({ eventCoalescing: true }),
         provideRouter(routes),
-        provideHttpClient(),
+        provideHttpClient(
+            withInterceptorsFromDi()
+        ),
         ...APP_CONFIG_PROVIDERS
     ],
 };
