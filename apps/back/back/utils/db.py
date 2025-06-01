@@ -26,3 +26,6 @@ def get_photos_collection(request: Request):
 
 def get_redis(request: Request):
     return request.app.state.redis
+
+def get_channels_collection(request: Request):
+    return request.app.state.db[settings.CHANNELS_COLLECTION]

@@ -1,10 +1,10 @@
 from aiogram import Bot, Dispatcher
-from redis.asyncio import Redis
 from motor.motor_asyncio import AsyncIOMotorClient
-from bot.utils.profile_data import fetch_avatar_base64, build_payload
+from redis.asyncio import Redis
+
+from bot.handlers import register_router, chat_member_router, group_member_router
 from bot.middlewares import RedisMiddleware, MongoMiddleware, BotMiddleware
 from config import settings
-from bot.handlers import register_router, chat_member_router
 
 bot = Bot(token=settings.TG_BOT_TOKEN)
 dp = Dispatcher()
@@ -19,7 +19,7 @@ async def main():
 
     dp.update.outer_middleware(BotMiddleware(bot))
 
-    for router in (register_router, chat_member_router):
+    for router in (register_router, chat_member_router, group_member_router):
         dp.include_router(router)
 
     await dp.start_polling(bot)

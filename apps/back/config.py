@@ -26,6 +26,7 @@ class Settings(BaseSettings):
     MONGO_PASSWORD: str
 
     USERS_COLLECTION: str = "users"
+    CHANNELS_COLLECTION: str = "channels"
     PHOTO_COLLECTION: str = "photos"
     ADMIN_CHANNEL_COLLECTION: str = "admin_channels"
 
