@@ -29,3 +29,6 @@ def get_redis(request: Request):
 
 def get_channels_collection(request: Request):
     return request.app.state.db[settings.CHANNELS_COLLECTION]
+
+def get_channel_posts_collection(request: Request):
+    return request.app.state.db[settings.CHANNEL_POSTS_COLLECTION]

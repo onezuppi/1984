@@ -27,6 +27,7 @@ class Settings(BaseSettings):
 
     USERS_COLLECTION: str = "users"
     CHANNELS_COLLECTION: str = "channels"
+    CHANNEL_POSTS_COLLECTION: str = "channel_posts"
     PHOTO_COLLECTION: str = "photos"
     ADMIN_CHANNEL_COLLECTION: str = "admin_channels"
 

@@ -3,12 +3,12 @@ from aiogram.enums import ChatType
 from aiogram.filters.chat_member_updated import ChatMemberUpdatedFilter, IS_NOT_MEMBER, ADMINISTRATOR
 from motor.motor_asyncio import AsyncIOMotorDatabase
 
-group_member_router = Router(name="channel_member_handlers")
+chat_member = Router(name="channel_member_handlers")
 
-group_member_router.my_chat_member.filter(F.chat.type == ChatType.CHANNEL)
+chat_member.my_chat_member.filter(F.chat.type == ChatType.CHANNEL)
 
 
-@group_member_router.my_chat_member(
+@chat_member.my_chat_member(
     ChatMemberUpdatedFilter(member_status_changed=IS_NOT_MEMBER >> ADMINISTRATOR)
 )
 async def bot_added_to_channel(
@@ -44,7 +44,7 @@ async def bot_added_to_channel(
     )
 
 
-@group_member_router.my_chat_member(
+@chat_member.my_chat_member(
     ChatMemberUpdatedFilter(member_status_changed=ADMINISTRATOR >> IS_NOT_MEMBER)
 )
 async def bot_removed_from_channel(

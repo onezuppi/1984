@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 
 from config import settings
-from .routes import auth_router, user_router
+from .routes import auth_router, user_router, posts_router
 from .utils.db import lifespan
 
 app = FastAPI(
@@ -11,5 +11,5 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-for rout in (auth_router, user_router):
+for rout in (auth_router, user_router, posts_router):
     app.include_router(rout)
