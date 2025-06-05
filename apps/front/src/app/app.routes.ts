@@ -4,6 +4,7 @@ import { Router, Routes } from '@angular/router';
 import { inject } from '@angular/core';
 import { AuthService } from './services/auth/auth.service';
 import { RedirectToAuthGuard } from './guards/redirect-to-auth.guard';
+import { AddBotGuard } from './guards/add-bot-guard';
 
 export const routes: Routes = [
     {
@@ -25,11 +26,18 @@ export const routes: Routes = [
         path: 'cabinet',
         component: AuthNavigationComponent,
         canActivate: [() => inject(AuthService).isAuthenticated ? true : inject(Router).parseUrl('/')],
-        children: NAV_ROUTES.map(r => ({
-            path: r.path,
-            loadComponent: r.loadComponent,
-            canActivate: r.canActivate
-        }))
+        children: [
+            ...NAV_ROUTES.map(r => ({
+                path: r.path,
+                loadComponent: r.loadComponent,
+                canActivate: r.canActivate
+            })),
+            {
+                path: 'posts/:channelId',
+                loadComponent: () => import('./pages/posts/posts.page').then((m) => m.PostPageComponent),
+                canActivate: [AddBotGuard],
+            },
+        ]
     },
     {
         path: '**',

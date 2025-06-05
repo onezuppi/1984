@@ -1,10 +1,5 @@
 <app-page-layout [title]="pageTitle">
     <ng-container *ngIf="userChannels$ | async as channels;">
-        <ul>
-            <li *ngFor="let channel of channels">
-                {{ channel | json }}
-            </li>
-        </ul>
+        <app-channel-card *ngFor="let channel of channels" [channel]="channel" (click)="channelCLick(channel)"></app-channel-card>
     </ng-container>
-    <ng-container></ng-container>
 </app-page-layout>

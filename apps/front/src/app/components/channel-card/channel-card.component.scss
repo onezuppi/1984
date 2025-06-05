@@ -1,0 +1,32 @@
+@use 'mixins/bg' as *;
+
+.channel-card {
+    background: rgba(255, 255, 255, 0.16);
+    backdrop-filter: blur(8px);
+    border-radius: 20px;
+    border: 1px solid rgba(30, 136, 229, 0.10);
+    box-shadow: 0 4px 24px rgba(30, 136, 229, 0.06);
+    margin-bottom: 1.5rem;
+    transition: box-shadow 0.2s;
+    cursor: pointer;
+
+    &:hover {
+        box-shadow: 0 8px 32px rgba(30, 136, 229, 0.18);
+        background: rgba(30, 136, 229, 0.10);
+    }
+
+    .channel-avatar {
+        background: #e3f2fd;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    mat-card-title {
+        font-weight: 700;
+    }
+
+    mat-chip {
+        margin-top: 0.7rem;
+    }
+}

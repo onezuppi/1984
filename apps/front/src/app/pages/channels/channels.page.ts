@@ -2,7 +2,8 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PageLayoutComponent } from '../../components/page-layout/page-layout.component';
 import { Channel, ChannelService } from '../../services/channels/channel.service';
-import { Observable } from 'rxjs';
+import { ChannelCardComponent } from '../../components/channel-card/channel-card.component';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     templateUrl: './channels.page.html',
@@ -11,6 +12,7 @@ import { Observable } from 'rxjs';
     imports: [
         CommonModule,
         PageLayoutComponent,
+        ChannelCardComponent,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -21,4 +23,11 @@ export class ChannelsPage {
 
     protected readonly userChannels$ = this._channelService.getUserChannels();
 
+    private readonly _router = inject(Router);
+
+    private readonly _route = inject(ActivatedRoute);
+
+    protected channelCLick({ _id }: Channel): void {
+        this._router.navigate([`../posts/${ _id }`], { relativeTo: this._route });
+    }
 }

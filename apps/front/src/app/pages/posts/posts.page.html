@@ -1,0 +1,2 @@
+<app-page-layout *ngIf="posts$ | async as posts" [title]="'Посты канала ' + posts[0].from_chat_title">
+</app-page-layout>

@@ -1,0 +1,21 @@
+<mat-card class="channel-card">
+    <mat-card-header>
+        <div mat-card-avatar class="channel-avatar">
+            <mat-icon>groups</mat-icon>
+        </div>
+        <mat-card-title>{{ channel.title }}</mat-card-title>
+        <mat-card-subtitle>{{ '@' + channel.username }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <p>{{ channel.description }}</p>
+        <div *ngIf="channel.is_private">
+            <mat-chip color="warn" selected>Приватный канал</mat-chip>
+        </div>
+        <div *ngIf="!channel.is_private">
+            <mat-chip color="primary" selected>Публичный канал</mat-chip>
+        </div>
+    </mat-card-content>
+    <mat-card-actions>
+        <a [href]="channel.invite_link" mat-button target="_blank">Ссылка-приглашение</a>
+    </mat-card-actions>
+</mat-card>
