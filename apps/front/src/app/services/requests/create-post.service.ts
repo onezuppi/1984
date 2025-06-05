@@ -10,7 +10,7 @@ const CHANNELS_LOAD_DELAY = 1000;
 const POSTS_LOAD_DELAY = 1500;
 
 @Injectable({ providedIn: 'root' })
-export class ChannelService {
+export class CreatePostService {
     private _channelsCache$?: Observable<Channel[]>;
     private _postsCache = new Map<string, Observable<Post[]>>();
 

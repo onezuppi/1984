@@ -27,13 +27,13 @@ export class UserService {
     private readonly _userSubject = new BehaviorSubject<User | null>(null);
     private readonly _avatarSubject = new BehaviorSubject<string | null>(null);
 
-    private readonly _userRequest$ = this._http.get<User>('/api/user/me').pipe(
+    private readonly _userRequest$ = this._http.get<User>('/api/user').pipe(
         tap(user => this._userSubject.next(user)),
         shareReplay({ bufferSize: 1, refCount: false })
     );
 
     private readonly _photoRequest$ =
-        this._http.get('/api/user/me/photo', { responseType: 'blob' }).pipe(
+        this._http.get('/api/user/photo', { responseType: 'blob' }).pipe(
             switchMap(blob => {
                 const url = URL.createObjectURL(blob);
                 this._avatarSubject.next(url);

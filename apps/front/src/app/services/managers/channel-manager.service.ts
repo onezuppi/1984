@@ -1,6 +1,6 @@
 import { effect, Injectable, signal } from '@angular/core';
 import { Post } from '../../models/post.model';
-import { ChannelService } from '../requests/channel.service';
+import { CreatePostService } from '../requests/create-post.service';
 import { Channel } from '../../models/channel.model';
 import { EditPostDialogService } from '../../modals/edit-post-dialog/edit-post-dialog-modal.service';
 import { take, tap } from 'rxjs';
@@ -18,7 +18,7 @@ export class ChannelManagerService {
     loadingPosts = signal(false);
 
     constructor(
-        private readonly _channelService: ChannelService,
+        private readonly _channelService: CreatePostService,
         private readonly _editPostDialogService: EditPostDialogService,
         private readonly _confirmService: ConfirmationService,
     ) {
