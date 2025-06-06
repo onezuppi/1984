@@ -43,6 +43,6 @@ export class ChannelsPage {
     }
 
     protected channelCLick({ _id }: Channel): void {
-        this._router.navigate([`../posts/${ _id }`], { relativeTo: this._route });
+        this._router.navigate([`../channels/${ _id }`], { relativeTo: this._route });
     }
 }
