@@ -1,8 +1,17 @@
 <app-page-layout [title]="pageTitle">
-    <ng-container *ngIf="userChannels$ | async as channels;">
-        <ng-container *ngIf="channels.length; else empty">
-            <app-channel-card *ngFor="let channel of channels" [channel]="channel" (click)="channelCLick(channel)"></app-channel-card>
+    <ng-container *ngIf="channels$ | async as channels;">
+        <ng-container *ngIf="isLoading$ | async as loading; else loaded">
+            <div class="loading-container" style="display: flex; justify-content: center; align-items: center; height: 200px;">
+                <mat-spinner diameter="60"></mat-spinner>
+            </div>
         </ng-container>
+
+        <ng-template #loaded>
+            <ng-container *ngIf="channels.length; else empty">
+                <app-channel-card *ngFor="let channel of channels" [channel]="channel" (click)="channelCLick(channel)"></app-channel-card>
+            </ng-container>
+        </ng-template>
+
         <ng-template #empty>
             <div class="empty-container" style="text-align: center; margin-top: 2rem;">
                 <mat-icon class="large-icon">forum</mat-icon>
@@ -10,9 +19,14 @@
                 <p style="color: #777; margin-bottom: 1.5rem;">
                     Добавьте новый канал, чтобы начать взаимодействовать с аудиторией.
                 </p>
-                <button mat-raised-button color="primary" [routerLink]="'/cabinet/add-channel'">
-                    Добавить канал
-                </button>
+               <div class="icons">
+                   <button mat-raised-button color="secondary" (click)="isLoading$.next(true)">
+                       Обновить список
+                   </button>
+                   <button mat-raised-button color="primary" [routerLink]="'/cabinet/add-channel'">
+                       Добавить канал
+                   </button>
+               </div>
             </div>
         </ng-template>
     </ng-container>

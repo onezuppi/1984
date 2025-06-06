@@ -6,6 +6,9 @@ import { ChannelCardComponent } from '../../components/channel-card/channel-card
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 import { MatButton } from '@angular/material/button';
+import { BehaviorSubject, switchMap, tap } from 'rxjs';
+import { delay, filter } from 'rxjs/operators';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @Component({
     templateUrl: './channels.page.html',
@@ -18,19 +21,26 @@ import { MatButton } from '@angular/material/button';
         MatIcon,
         MatButton,
         RouterLink,
+        MatProgressSpinner,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChannelsPage {
     protected readonly pageTitle: string = 'Мои каналы';
-
+    protected readonly channels$;
+    protected readonly isLoading$: BehaviorSubject<boolean> = new BehaviorSubject(true);
     private readonly _channelService = inject(ChannelService);
-
-    protected readonly userChannels$ = this._channelService.getUserChannels();
-
     private readonly _router = inject(Router);
-
     private readonly _route = inject(ActivatedRoute);
+
+    constructor() {
+        this.channels$ = this.isLoading$.pipe(
+            filter(is => is),
+            switchMap(() => this._channelService.getUserChannels()),
+            delay(100),
+            tap(() => this.isLoading$.next(false)),
+        )
+    }
 
     protected channelCLick({ _id }: Channel): void {
         this._router.navigate([`../posts/${ _id }`], { relativeTo: this._route });
