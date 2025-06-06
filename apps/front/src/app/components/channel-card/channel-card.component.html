@@ -5,6 +5,7 @@
         </div>
         <mat-card-title>{{ channel.title }}</mat-card-title>
         <mat-card-subtitle>{{ '@' + channel.username }}</mat-card-subtitle>
+        <a mat-button style="margin-left: 24px" [routerLink]="'/cabinet/add-post/' + channel._id" >Создать пост</a>
     </mat-card-header>
     <mat-card-content>
         <p>{{ channel.description }}</p>

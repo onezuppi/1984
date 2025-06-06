@@ -8,11 +8,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTooltip } from '@angular/material/tooltip';
+import { RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-channel-card',
     standalone: true,
-    imports: [CommonModule, MatCardModule, MatChipsModule, MatIconModule, MatButtonModule, MatTooltip],
+    imports: [CommonModule, MatCardModule, MatChipsModule, MatIconModule, MatButtonModule, MatTooltip, RouterLink],
     templateUrl: './channel-card.component.html',
     styleUrls: ['./channel-card.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,

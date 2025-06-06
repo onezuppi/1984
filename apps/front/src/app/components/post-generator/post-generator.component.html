@@ -1,0 +1,55 @@
+<div class="post-generator-wrapper">
+    <section class="left-pane">
+        <mat-form-field appearance="outline" class="prompt-field">
+      <textarea
+          matInput
+          rows="8"
+          [(ngModel)]="prompt"
+          placeholder="Тут будет ваш пост, выберите референсы если нужно или опишите что хотите увидеть в посте и нажмите 'Сгенерировать'"
+          [disabled]="isGenerating">
+      </textarea>
+        </mat-form-field>
+
+        <div class="prompt-history" *ngIf="lastPrompt$ | async as lastPrompt">
+            <span class="prompt-preview">{{ lastPrompt }}</span>
+            <button
+                mat-stroked-button
+                size="small"
+                (click)="reuseLastPrompt()"
+                [disabled]="isGenerating">
+                Вставить снова
+            </button>
+        </div>
+
+        <button
+            mat-raised-button
+            color="primary"
+            class="generate-btn"
+            (click)="generatePost()"
+            [disabled]="isGenerating || !channelId">
+            <ng-container *ngIf="!isGenerating">Сгенерировать</ng-container>
+            <mat-progress-spinner
+                *ngIf="isGenerating"
+                diameter="24"
+                mode="indeterminate">
+            </mat-progress-spinner>
+        </button>
+    </section>
+
+    <section class="right-pane">
+        <h3 class="refs-title">Референсы</h3>
+
+        <mat-selection-list
+            class="refs-list"
+            [(ngModel)]="selectedReferences"
+            [disabled]="isGenerating">
+            <mat-list-option
+                *ngFor="let reference of references"
+                [value]="reference"
+                checkboxPosition="before"
+                class="refs-list-item">
+                <app-published-post [post]="reference"></app-published-post>
+            </mat-list-option>
+        </mat-selection-list>
+    </section>
+</div>

@@ -1,35 +1,69 @@
-<!-- Скелетон для селектора каналов -->
-<div *ngIf="manager.loadingChannels()" class="skeleton-container">
-    <div class="skeleton-line title"></div>
-    <div class="skeleton-line select"></div>
-</div>
+<mat-horizontal-stepper #stepper linear>
+    <!-- Шаг 1. Выбор канала -->
+    <mat-step>
+        <ng-template matStepLabel>Выбор канала</ng-template>
 
-<!-- Селектор каналов -->
-<app-channel-selector
-    *ngIf="!manager.loadingChannels()"
-    [channels]="manager.channels()"
-    [selectedChannelId]="manager.selectedChannelId()"
-    (channelChange)="manager.selectChannel($event)">
-</app-channel-selector>
+        <!-- Спиннер загрузки каналов -->
+        <ng-container *ngIf="isLoadingChannels$ | async; else channelsLoaded">
+            <div class="loading-container">
+                <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+            </div>
+        </ng-container>
 
-<!-- Кнопка регенерации — только после первой загрузки постов -->
-<div class="actions" *ngIf="manager.posts().length && !manager.loadingPosts()">
-    <button
-        mat-raised-button
-        color="primary"
-        (click)="manager.regeneratePosts()">
-        Прегенерировать посты
-    </button>
-</div>
+        <!-- Список каналов -->
+        <ng-template #channelsLoaded>
+            <ng-container *ngIf="channels$ | async as channels">
+                <ng-container *ngIf="channels.length; else noChannels">
+                    <div class="channel-list">
+                        <button
+                            mat-stroked-button
+                            *ngFor="let ch of channels"
+                            (click)="onChannelClick(ch._id)"
+                            [disabled]="isLoadingChannels$ | async"
+                            [class.selected]="(selectedChannelId$ | async) === ch._id">
+                            {{ ch.title }}
+                        </button>
+                    </div>
+                </ng-container>
+            </ng-container>
 
-<!-- Спиннер во время загрузки постов -->
-<div *ngIf="manager.loadingPosts()" class="loading-spinner">
-    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-</div>
+            <ng-template #noChannels>
+                <div class="empty-message">Нет доступных каналов</div>
+            </ng-template>
+        </ng-template>
 
-<!-- Список постов -->
-<app-post-list
-    *ngIf="!manager.loadingPosts()"
-    [posts]="manager.posts()"
-    (action)="manager.handlePostAction($event)">
-</app-post-list>
+        <div class="actions-step">
+            <button
+                mat-raised-button
+                color="primary"
+                matStepperNext
+                [disabled]="!(selectedChannelId$ | async) || (isLoadingChannels$ | async)">
+                Далее
+            </button>
+        </div>
+    </mat-step>
+
+    <!-- Шаг 2. Генерация поста -->
+    <mat-step>
+        <ng-template matStepLabel>Генерация поста</ng-template>
+
+        <ng-container *ngIf="selectedChannelId$ | async as selectedChannelId; else selectChannelTip">
+            <ng-container *ngIf="selectedChannelId">
+                <app-post-generator
+                    [channelId]="selectedChannelId"
+                    [references]="(references$ | async) ?? []"
+                    (postGenerated)="onPostGenerated($event)">
+                </app-post-generator>
+            </ng-container>
+        </ng-container>
+
+        <ng-template #selectChannelTip>
+            <div class="empty-message">Сначала выберите канал</div>
+        </ng-template>
+
+        <div class="actions-step">
+            <button mat-button matStepperPrevious>Назад</button>
+        </div>
+    </mat-step>
+</mat-horizontal-stepper>
+

@@ -14,7 +14,6 @@ import { ChannelManagerComponent } from '../../components/channel-manager/channe
         CommonModule,
         PageLayoutComponent,
         ChannelManagerComponent,
-
     ]
 })
 export class AddPostPage {

@@ -1,7 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, Observable, of } from 'rxjs';
-import { shareReplay } from 'rxjs/operators';
+import { catchError, Observable, of, map } from 'rxjs';
 
 export interface Post {
     _id: string;
@@ -26,14 +25,22 @@ export interface Post {
 
 @Injectable({ providedIn: 'root' })
 export class PostService {
-
     private readonly _http = inject(HttpClient);
 
     public getPostsByChannelId(channelId: string): Observable<Post[]> {
-        return this._http.get<Post[]>(`/api/posts/${ channelId }`)
+        return this._http.get<Post[]>(`/api/posts/${channelId}`)
             .pipe(
-                catchError(err => of([]))
+                catchError(() => of([]))
             );
     }
 
+    public generatePost(prompt: string,): Observable<string> {
+        return this._http.post<{response: string}>('/api/llm/chat', {
+            prompt: prompt,
+        })
+            .pipe(
+                map(({ response }) => response),
+                catchError(() => of(null as any))
+            );
+    }
 }
