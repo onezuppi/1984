@@ -45,7 +45,7 @@ export class AuthInterceptor implements HttpInterceptor {
     private addTokenHeader(request: HttpRequest<any>, token: string): HttpRequest<any> {
         return request.clone({
             setHeaders: {
-                Authorization: `Bearer ${token}`
+                Authorization: `Bearer ${ token }`
             }
         });
     }
@@ -55,7 +55,8 @@ export class AuthInterceptor implements HttpInterceptor {
             const payload = jwtDecode<JwtPayload>(token);
             const nowSeconds = Math.floor(Date.now() / 1000);
             return payload.exp - nowSeconds < 60;
-        } catch {
+        }
+        catch {
             return true;
         }
     }
@@ -90,7 +91,10 @@ export class AuthInterceptor implements HttpInterceptor {
                 .pipe(
                     filter(isRefreshing => !isRefreshing),
                     take(1),
-                    switchMap(() => this.handleTokenRefresh(request, next))
+                    switchMap(() => this.authService.accessToken$),
+                    filter(newToken => !!newToken),
+                    take(1),
+                    switchMap(newToken => next.handle(this.addTokenHeader(request, newToken!)))
                 );
         }
     }

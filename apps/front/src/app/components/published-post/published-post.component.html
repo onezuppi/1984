@@ -1,0 +1,17 @@
+<article class="tg-msg">
+    <header class="tg-msg__head">
+        <div class="tg-msg__avatar">
+            <span class="tg-avatar-initial">{{ avatarInitial }}</span>
+        </div>
+        <div class="tg-msg__meta">
+            <span class="tg-msg__author">{{ post.from_chat_title }}</span>
+            <time class="tg-msg__time">{{ post.date | date : 'dd.MM.yyyy, HH:mm' }}</time>
+        </div>
+    </header>
+
+    <section class="tg-msg__body">
+        <p class="tg-msg__text" [innerHTML]="formattedText"></p>
+        <img *ngIf="post.photo" [src]="post.photo" class="tg-msg__media" alt="photo" loading="lazy" />
+        <video *ngIf="post.video" [src]="post.video" class="tg-msg__media" controls></video>
+    </section>
+</article>

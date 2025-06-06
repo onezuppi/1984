@@ -10,7 +10,7 @@ import {
     switchMap,
     catchError,
     shareReplay,
-    withLatestFrom,
+    withLatestFrom, delay,
 } from 'rxjs/operators';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -19,6 +19,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { PostService, Post } from '../../services/posts/posts.service';
 import { ChannelService, Channel } from '../../services/channels/channel.service';
 import { ChannelCardComponent } from '../../components/channel-card/channel-card.component';
+import { PublishedPostComponent } from '../../components/published-post/published-post.component';
 
 @Component({
     selector: 'app-posts-page',
@@ -30,8 +31,8 @@ import { ChannelCardComponent } from '../../components/channel-card/channel-card
         MatProgressSpinnerModule,
         MatIconModule,
         MatButtonModule,
-        RouterLink,
         ChannelCardComponent,
+        PublishedPostComponent,
     ],
     templateUrl: './posts.page.html',
     styleUrls: ['./posts.page.scss'],
@@ -73,6 +74,7 @@ export class PostsPage implements OnInit, OnDestroy {
                 catchError(() => of([]))
             )
         ),
+        delay(200),
         tap(() => this.isPostsLoading$.next(false)),
         shareReplay({ bufferSize: 1, refCount: true })
     );
