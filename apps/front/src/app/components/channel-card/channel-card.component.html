@@ -17,5 +17,14 @@
     </mat-card-content>
     <mat-card-actions>
         <a [href]="channel.invite_link" mat-button target="_blank">Ссылка-приглашение</a>
+        <button
+            mat-icon-button
+            aria-label="Копировать ссылку"
+            (click)="copyLink($event, channel.invite_link)"
+            matTooltip="Копировать ссылку"
+            class="copy-button"
+        >
+            <mat-icon class="small-icon">content_copy</mat-icon>
+        </button>
     </mat-card-actions>
 </mat-card>

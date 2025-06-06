@@ -1,17 +1,10 @@
 <app-page-layout [title]="pageTitle">
-    <ng-container *ngIf="channels$ | async as channels;">
-        <ng-container *ngIf="isLoading$ | async as loading; else loaded">
-            <div class="loading-container" style="display: flex; justify-content: center; align-items: center; height: 200px;">
-                <mat-spinner diameter="60"></mat-spinner>
-            </div>
-        </ng-container>
-
-        <ng-template #loaded>
+    <ng-container *ngIf="channels$ | async as channels; else loading">
+        <ng-container *ngIf="(isLoading$ | async) === false; else loading">
             <ng-container *ngIf="channels.length; else empty">
                 <app-channel-card *ngFor="let channel of channels" [channel]="channel" (click)="channelCLick(channel)"></app-channel-card>
             </ng-container>
-        </ng-template>
-
+        </ng-container>
         <ng-template #empty>
             <div class="empty-container" style="text-align: center; margin-top: 2rem;">
                 <mat-icon class="large-icon">forum</mat-icon>
@@ -31,3 +24,9 @@
         </ng-template>
     </ng-container>
 </app-page-layout>
+
+<ng-template #loading>
+    <div class="loading-container" style="display: flex; justify-content: center; align-items: center; height: 200px;">
+        <mat-spinner diameter="60"></mat-spinner>
+    </div>
+</ng-template>
