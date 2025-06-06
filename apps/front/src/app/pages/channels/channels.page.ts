@@ -3,7 +3,9 @@ import { CommonModule } from '@angular/common';
 import { PageLayoutComponent } from '../../components/page-layout/page-layout.component';
 import { Channel, ChannelService } from '../../services/channels/channel.service';
 import { ChannelCardComponent } from '../../components/channel-card/channel-card.component';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { MatIcon } from '@angular/material/icon';
+import { MatButton } from '@angular/material/button';
 
 @Component({
     templateUrl: './channels.page.html',
@@ -13,6 +15,9 @@ import { ActivatedRoute, Router } from '@angular/router';
         CommonModule,
         PageLayoutComponent,
         ChannelCardComponent,
+        MatIcon,
+        MatButton,
+        RouterLink,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })

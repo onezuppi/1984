@@ -34,11 +34,11 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
+}
 
-    &__item {
-        display: flex;
-        align-items: center;
-    }
+.nav-list__item {
+    display: flex;
+    align-items: center;
 }
 
 .logout {

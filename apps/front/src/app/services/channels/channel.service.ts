@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, Observable, of } from 'rxjs';
 import { shareReplay } from 'rxjs/operators';
 
 export interface Channel {
@@ -20,7 +20,10 @@ export class ChannelService {
     private readonly _http = inject(HttpClient);
 
     public getUserChannels(): Observable<Channel[]> {
-        return this._http.get<Channel[]>(`/api/user/channels`);
+        return this._http.get<Channel[]>(`/api/user/channels`)
+            .pipe(
+                catchError(err => of([]))
+            );
     }
 
 }

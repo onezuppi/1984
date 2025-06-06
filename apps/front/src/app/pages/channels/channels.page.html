@@ -1,5 +1,19 @@
 <app-page-layout [title]="pageTitle">
     <ng-container *ngIf="userChannels$ | async as channels;">
-        <app-channel-card *ngFor="let channel of channels" [channel]="channel" (click)="channelCLick(channel)"></app-channel-card>
+        <ng-container *ngIf="channels.length; else empty">
+            <app-channel-card *ngFor="let channel of channels" [channel]="channel" (click)="channelCLick(channel)"></app-channel-card>
+        </ng-container>
+        <ng-template #empty>
+            <div class="empty-container" style="text-align: center; margin-top: 2rem;">
+                <mat-icon class="large-icon">forum</mat-icon>
+                <h3 style="color: #555; margin: 1rem 0;">У вас пока нет каналов</h3>
+                <p style="color: #777; margin-bottom: 1.5rem;">
+                    Добавьте новый канал, чтобы начать взаимодействовать с аудиторией.
+                </p>
+                <button mat-raised-button color="primary" [routerLink]="'/cabinet/add-channel'">
+                    Добавить канал
+                </button>
+            </div>
+        </ng-template>
     </ng-container>
 </app-page-layout>
