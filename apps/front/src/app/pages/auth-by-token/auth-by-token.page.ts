@@ -39,7 +39,7 @@ export class AuthByTokenPage implements OnInit {
                         horizontalPosition: 'center',
                         verticalPosition: 'top'
                     });
-                    this._router.navigate(['/cabinet']);
+                    this._router.navigate(['/cabinet/channels']);
                 } else {
                     this._snackBar.open('Ошибка авторизации', 'Закрыть', {
                         duration: 3000,

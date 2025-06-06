@@ -31,6 +31,10 @@ class Settings(BaseSettings):
     PHOTO_COLLECTION: str = "photos"
     ADMIN_CHANNEL_COLLECTION: str = "admin_channels"
 
+    GIGACHAT_API_KEY: str
+    GIGACHAT_SCOPE: str = "GIGACHAT_API_PERS"
+    GIGACHAT_MODEL: str = "GigaChat-Pro"
+
     @property
     def MONGO_URI(self) -> str:
         user = urllib.parse.quote_plus(self.MONGO_USERNAME)
