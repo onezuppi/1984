@@ -9,7 +9,7 @@ export class RedirectToAuthGuard implements CanActivate {
 
     public canActivate() {
         if (this._authService.isAuthenticated) {
-            return this._router.parseUrl('/cabinet');
+            return this._router.parseUrl('/cabinet/add-channel');
         }
 
         return true;
