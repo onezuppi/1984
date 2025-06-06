@@ -19,11 +19,17 @@ export class ChannelService {
 
     private readonly _http = inject(HttpClient);
 
-    public getUserChannels(): Observable<Channel[]> {
-        return this._http.get<Channel[]>(`/api/user/channels`)
+    public getChannels(): Observable<Channel[]> {
+        return this._http.get<Channel[]>(`/api/channels`)
             .pipe(
                 catchError(err => of([]))
             );
     }
 
+    public getChannelById(id: string): Observable<Channel | null> {
+        return this._http.get<Channel>(`/api/channels/${id}`)
+            .pipe(
+                catchError(err => of(null))
+            );
+    }
 }

@@ -34,7 +34,7 @@ export const routes: Routes = [
             })),
             {
                 path: 'channels/:channelId',
-                loadComponent: () => import('./pages/posts/posts.page').then((m) => m.PostPageComponent),
+                loadComponent: () => import('./pages/posts/posts.page').then((m) => m.PostsPage),
                 canActivate: [AddBotGuard],
             },
         ]

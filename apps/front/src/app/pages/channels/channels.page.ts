@@ -36,7 +36,7 @@ export class ChannelsPage {
     constructor() {
         this.channels$ = this.isLoading$.pipe(
             filter(is => is),
-            switchMap(() => this._channelService.getUserChannels()),
+            switchMap(() => this._channelService.getChannels()),
             delay(100),
             tap(() => this.isLoading$.next(false)),
         )

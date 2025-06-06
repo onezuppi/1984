@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, Observable, of } from 'rxjs';
 import { shareReplay } from 'rxjs/operators';
 
 export interface Post {
@@ -30,7 +30,10 @@ export class PostService {
     private readonly _http = inject(HttpClient);
 
     public getPostsByChannelId(channelId: string): Observable<Post[]> {
-        return this._http.get<Post[]>(`/api/posts/${ channelId }`);
+        return this._http.get<Post[]>(`/api/posts/${ channelId }`)
+            .pipe(
+                catchError(err => of([]))
+            );
     }
 
 }

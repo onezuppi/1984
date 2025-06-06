@@ -13,12 +13,8 @@
                     Добавьте новый канал, чтобы начать взаимодействовать с аудиторией.
                 </p>
                <div class="icons">
-                   <button mat-raised-button color="secondary" (click)="isLoading$.next(true)">
-                       Обновить список
-                   </button>
-                   <button mat-raised-button color="primary" [routerLink]="'/cabinet/add-channel'">
-                       Добавить канал
-                   </button>
+                   <button mat-stroked-button color="primary" (click)="isLoading$.next(true)">Обновить</button>
+                   <button mat-button [routerLink]="'/cabinet/add-channel'">Добавить канал</button>
                </div>
             </div>
         </ng-template>

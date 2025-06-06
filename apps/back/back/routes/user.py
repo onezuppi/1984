@@ -1,8 +1,5 @@
 import base64
-from typing import List
-
 from fastapi import APIRouter, HTTPException, Depends, Response
-
 from back.models.auth import UserModel
 from back.models.channel import ChannelModel
 from back.utils.db import get_users_collection, get_photos_collection, get_channels_collection
@@ -38,18 +35,3 @@ async def get_my_photo(
         raise HTTPException(status_code=500, detail="Failed to decode image")
 
     return Response(content=img_bytes, media_type="image/jpeg")
-
-
-@router.get("/channels", response_model=List[ChannelModel])
-async def get_user_channels(
-    user_id: str = Depends(verify_and_get_user),
-    channels=Depends(get_channels_collection),
-):
-    cursor = channels.find({"user_id": int(user_id)})
-    channels_list = []
-    async for channel in cursor:
-        channels_list.append(ChannelModel(**channel))
-    if not channels_list:
-        raise HTTPException(status_code=404, detail="No channels found for this user.")
-
-    return channels_list
